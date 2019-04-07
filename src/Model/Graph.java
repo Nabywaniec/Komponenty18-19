@@ -19,12 +19,11 @@ public class Graph {
                 Vertex vertex = new Vertex(vertexId);
                 List<String> neighbours = Arrays.asList(splitted.get(1).toString().split(" "));
                 List<Integer> neighboursList = new ArrayList<>();
-                for (int i = 0; i < neighbours.size(); i++) {
-                    Integer vertedId = Integer.parseInt(neighbours.get(i));
+                for (String neighbour : neighbours) {
+                    Integer vertedId = Integer.parseInt(neighbour);
                     neighboursList.add(vertedId);
                     structure.put(vertex, neighboursList);
                 }
-
             }
         } catch (IOException e) {
             e.printStackTrace();

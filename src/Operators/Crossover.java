@@ -20,7 +20,7 @@ public class Crossover {
             for (int i = 0; i < neighboursFirst.size(); i++) {
                 Random r = new Random();
                 if (r.nextBoolean()) {
-                    neighboursFirst.set(i, neighboursSecond.get(i);
+                    neighboursFirst.set(i, neighboursSecond.get(i));
                 }
             }
             result.put(key, neighboursFirst);

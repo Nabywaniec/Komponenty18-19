@@ -9,7 +9,6 @@ import java.util.Map;
 public class Mutator {
 
     public Mutator() {
-
     }
 
     public Map<Vertex, List<Integer>> mutate(Map<Vertex, List<Integer>> redirections) {
