@@ -6,7 +6,6 @@ import java.util.*;
 public class Graph {
 
     private Map<Vertex, List<Integer>> structure = new HashMap<>();
-    private Map<Vertex, List<Integer>> redirections = new HashMap<>();
 
 
     public void setStructure(String fileName) {
