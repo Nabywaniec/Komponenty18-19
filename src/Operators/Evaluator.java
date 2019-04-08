@@ -1,5 +1,6 @@
 package Operators;
 
+import Model.Edge;
 import Model.Vertex;
 
 import java.util.ArrayList;
@@ -13,19 +14,26 @@ public class Evaluator {
     public Evaluator() {
     }
 
-    public int evaluate(Map<Integer, List<Integer>> redirections, List<Integer> positions, int M) {
+    public int evaluate(Map<Integer, List<Integer>> redirections, Map<Vertex, List<Edge>> graphStructure, List<Integer> positions, int M) {
 
         for (int i = 0; i < M; i++) {
             isVisited.set(i, true);
         }
+        int step = -1;
         int result = 0;
         while (!isAllVisited()) {
-            result += 1;
+            step += 1;
             for (int i = 0; i < M; i++) {
-                List<Integer> redirectionList = redirections.get(i);
+                List<Integer> redirectionList = redirections.get(positions.get(i));
                 int newPositon = redirectionList.get(result % redirectionList.size());
                 isVisited.set(newPositon, true);
                 positions.set(i, redirectionList.get(result % redirectionList.size()));
+                List<Edge> egdes = graphStructure.get(positions.get(i));
+                for (Edge edge : egdes) {
+                    if (edge.getFirstVertexId() == newPositon || edge.getSecondVertexId() == newPositon) {
+                        result += edge.getCost();
+                    }
+                }
             }
         }
         return result;
