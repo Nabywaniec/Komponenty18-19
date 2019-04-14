@@ -32,7 +32,7 @@ public class Graph {
 
     public static void main(String[] args) {
         Graph graph = new Graph();
-        graph.setStructure("file.txt");
+        graph.setStructure("src/main/resources/file.txt");
         System.out.println(graph.structure.entrySet());
     }
 
