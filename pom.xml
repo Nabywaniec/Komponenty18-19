@@ -20,5 +20,12 @@
         </plugins>
     </build>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>org.uma.jmetal</groupId>
+            <artifactId>jmetal</artifactId>
+            <version>5.7</version>
+            <type>pom</type>
+        </dependency>
+    </dependencies>
 </project>
