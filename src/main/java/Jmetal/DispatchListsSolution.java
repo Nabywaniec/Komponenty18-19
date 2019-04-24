@@ -1,18 +1,29 @@
 package Jmetal;
 
-import org.uma.jmetal.problem.IntegerProblem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.impl.AbstractGenericSolution;
 
 import java.util.*;
 
-public class ArrayIntegerSolution extends AbstractGenericSolution<Integer, IntegerProblem>{
+public class DispatchListsSolution extends AbstractGenericSolution<Integer, DispatchListsProblem>{
 
-    protected ArrayIntegerSolution(IntegerProblem problem) {
+    protected DispatchListsSolution(DispatchListsProblem problem) {
         super(problem);
+        List<Integer> randomSequence = new ArrayList(problem.getVertexNum());
+
+        int i;
+        for(i = 0; i < problem.getVertexNum(); ++i) {
+            randomSequence.add(i);
+        }
+
+        Collections.shuffle(randomSequence);
+
+        for(i = 0; i < this.getNumberOfVariables(); ++i) {
+            this.setVariableValue(i, randomSequence.get(i));
+        }
     }
 
-    public ArrayIntegerSolution(ArrayIntegerSolution solution) {
+    public DispatchListsSolution(DispatchListsSolution solution) {
         this(solution.problem);
 
         int i;
@@ -34,7 +45,7 @@ public class ArrayIntegerSolution extends AbstractGenericSolution<Integer, Integ
 
     @Override
     public Solution<Integer> copy() {
-        return new ArrayIntegerSolution(this);
+        return new DispatchListsSolution(this);
     }
 
     @Override
