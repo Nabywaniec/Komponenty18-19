@@ -5,7 +5,7 @@ import org.uma.jmetal.solution.impl.AbstractGenericSolution;
 
 import java.util.*;
 
-public class DefaultDispatchListsSolution extends AbstractGenericSolution<Integer, DispatchListsProblem<?>>{
+public class DefaultDispatchListsSolution extends AbstractGenericSolution<Integer, DispatchListsProblem<?>> implements DispatchListsSolution{
 
     protected DefaultDispatchListsSolution(DispatchListsProblem problem) {
         super(problem);

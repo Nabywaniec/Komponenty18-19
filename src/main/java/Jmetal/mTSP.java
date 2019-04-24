@@ -25,6 +25,6 @@ public class mTSP extends AbstractGenericProblem<DispatchListsSolution> implemen
 
     @Override
     public DispatchListsSolution createSolution() {
-        return null;
+        return new DefaultDispatchListsSolution(this);
     }
 }
