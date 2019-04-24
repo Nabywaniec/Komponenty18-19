@@ -9,17 +9,9 @@ public class DefaultDispatchListsSolution extends AbstractGenericSolution<Intege
 
     protected DefaultDispatchListsSolution(DispatchListsProblem problem) {
         super(problem);
-        List<Integer> randomSequence = new ArrayList(problem.getVertexNum());
 
-        int i;
-        for(i = 0; i < problem.getVertexNum(); ++i) {
-            randomSequence.add(i);
-        }
-
-        Collections.shuffle(randomSequence);
-
-        for(i = 0; i < this.getNumberOfVariables(); ++i) {
-            this.setVariableValue(i, randomSequence.get(i));
+        for(int i = 0; i < this.getNumberOfVariables(); ++i) {
+            this.setVariableValue(i, this.randomGenerator.nextInt(0, problem.getVertexNum()));
         }
     }
 
