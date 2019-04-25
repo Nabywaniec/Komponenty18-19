@@ -1,5 +1,6 @@
 package mTSP;
 
+import Model.Graph;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.operator.CrossoverOperator;
@@ -13,7 +14,6 @@ import org.uma.jmetal.solution.IntegerSolution;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
-import org.uma.jmetal.util.ProblemUtils;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -41,20 +41,30 @@ public class NSGAIIIntegerRunner extends AbstractAlgorithmRunner {
         MutationOperator<IntegerSolution> mutation;
         SelectionOperator<List<IntegerSolution>, IntegerSolution> selection;
 
-        String problemName ;
 
-        String referenceParetoFront = "" ;
-        if (args.length == 1) {
-            problemName = args[0];
-        } else if (args.length == 2) {
-            problemName = args[0] ;
-            referenceParetoFront = args[1] ;
+        String filename = "";
+        int dispatchListLength = 0;
+        int numOfDrivers = 0;
+        String referenceParetoFront = "";
+        if (args.length == 3) {
+            filename = args[0];
+            dispatchListLength = Integer.parseInt(args[1]);
+            numOfDrivers = Integer.parseInt(args[2]);
+        } else if (args.length == 4) {
+            filename = args[0];
+            dispatchListLength = Integer.parseInt(args[1]);
+            numOfDrivers = Integer.parseInt(args[2]);
+            referenceParetoFront = args[3] ;
         } else {
-            problemName = "org.uma.jmetal.problem.multiobjective.NMMin" ;
+            filename = "";
+            dispatchListLength = 5;
+            numOfDrivers = 5;
             referenceParetoFront = "";
         }
 
-        problem = ProblemUtils.<IntegerSolution> loadProblem(problemName);
+        Graph graph = new Graph();
+        graph.setFullGraphStructure(filename);
+        problem = new mTSP(graph, dispatchListLength, numOfDrivers);
 
         double crossoverProbability = 0.9 ;
         double crossoverDistributionIndex = 20.0 ;
