@@ -18,22 +18,8 @@ import org.uma.jmetal.util.JMetalLogger;
 import java.io.FileNotFoundException;
 import java.util.List;
 
-/**
- * Class for configuring and running the NSGA-II algorithm (integer encoding)
- *
- * @author Antonio J. Nebro <antonio@lcc.uma.es>
- */
-
 public class NSGAIIIntegerRunner extends AbstractAlgorithmRunner {
-    /**
-     * @param args Command line arguments.
-     * @throws org.uma.jmetal.util.JMetalException
-     * @throws java.io.IOException
-     * @throws SecurityException
-     * @throws ClassNotFoundException
-     * Invoking command:
-    java org.uma.jmetal.runner.multiobjective.NSGAIIIntegerRunner problemName [referenceFront]
-     */
+
     public static void main(String[] args) throws FileNotFoundException {
         Problem<IntegerSolution> problem;
         Algorithm<List<IntegerSolution>> algorithm;
