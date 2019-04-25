@@ -18,7 +18,7 @@ import org.uma.jmetal.util.JMetalLogger;
 import java.io.FileNotFoundException;
 import java.util.List;
 
-public class NSGAIIIntegerRunner extends AbstractAlgorithmRunner {
+public class mTSPNSGAIIIntegerRunner extends AbstractAlgorithmRunner {
 
     public static void main(String[] args) throws FileNotFoundException {
         Problem<IntegerSolution> problem;
