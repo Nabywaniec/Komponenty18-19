@@ -26,7 +26,7 @@ public class mTSP extends AbstractIntegerProblem {
 
         for (int i = 0; i < getNumberOfVariables(); i++) {
             lowerLimit.add(0);
-            upperLimit.add(this.graph.getVertexNum());
+            upperLimit.add(this.graph.getVertexNum()-1);
         }
 
         setLowerLimit(lowerLimit);
