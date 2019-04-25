@@ -36,6 +36,7 @@ public class mTSP extends AbstractIntegerProblem {
     @Override
     public void evaluate(IntegerSolution integerSolution) {
         int fitness = 0;
+        List<Integer> dispatchList = integerSolution.getVariables();
 
         integerSolution.setObjective(0, fitness);
     }
