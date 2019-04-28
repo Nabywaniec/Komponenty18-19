@@ -91,4 +91,8 @@ public class Graph {
         System.out.println(graph.structure.entrySet());
     }
 
+    //TODO
+    public int getVertexNum() {
+        return 0;
+    }
 }
