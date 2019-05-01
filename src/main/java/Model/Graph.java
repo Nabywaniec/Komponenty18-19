@@ -6,7 +6,26 @@ import java.util.*;
 public class Graph {
 
     private Map<Vertex, List<Edge>> structure = new HashMap<>();
+    private Map<Integer, List<Integer>> dispatchList = new HashMap<>();
+    private int vertexNum = 0;
 
+    public Map<Vertex, List<Edge>> getStructure() {
+        return structure;
+    }
+
+    public void setDispatchList(List<Integer> dispatchListRaw, int dispatchListVertexLength) {
+        for(int vertexId = 0; vertexId < vertexNum; vertexId++){
+            List<Integer> vertexDispatchList = new ArrayList<>();
+            for(int dispatchListVertexNum = 0; dispatchListVertexNum < dispatchListVertexLength; dispatchListVertexNum++){
+                vertexDispatchList.add(dispatchListRaw.get(vertexId*dispatchListVertexLength+dispatchListVertexNum));
+            }
+            this.dispatchList.put(vertexId, vertexDispatchList);
+        }
+    }
+
+    public Map<Integer, List<Integer>> getDispatchList() {
+        return dispatchList;
+    }
 
     public void setStructure(String fileName) {
         File file = new File(fileName);
@@ -46,7 +65,7 @@ public class Graph {
             String line;
             while ((line = br.readLine()) != null) {
                 List<String> splitted = Arrays.asList(line.split("\t"));
-                int vertexId = Integer.parseInt(splitted.get(0));
+                int vertexId = Integer.parseInt(splitted.get(0))-1;
                 int x = Integer.parseInt(splitted.get(1));
                 int y = Integer.parseInt(splitted.get(1));
                 Vertex vertex = new Vertex(vertexId, x, y);
@@ -82,6 +101,7 @@ public class Graph {
             structure.put(new Vertex(i), edges);
         }
         this.structure = structure;
+        this.vertexNum = structure.size();
     }
 
 
@@ -92,6 +112,6 @@ public class Graph {
     }
 
     public int getVertexNum() {
-        return structure.size();
+        return this.vertexNum;
     }
 }
