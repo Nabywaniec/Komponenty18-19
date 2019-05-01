@@ -42,9 +42,9 @@ public class mTSPNSGAIIIntegerRunner extends AbstractAlgorithmRunner {
             numOfDrivers = Integer.parseInt(args[2]);
             referenceParetoFront = args[3] ;
         } else {
-            filename = "";
-            dispatchListLength = 5;
-            numOfDrivers = 5;
+            filename = "src\\main\\resources\\input\\mtsp\\mtsp8.txt";
+            dispatchListLength = 2;
+            numOfDrivers = 2;
             referenceParetoFront = "";
         }
 
