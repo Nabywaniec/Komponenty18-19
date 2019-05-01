@@ -1,10 +1,12 @@
 package mTSP;
 
 import Model.Graph;
+import Operators.Evaluator;
 import org.uma.jmetal.problem.impl.AbstractIntegerProblem;
 import org.uma.jmetal.solution.IntegerSolution;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class mTSP extends AbstractIntegerProblem {
@@ -33,12 +35,16 @@ public class mTSP extends AbstractIntegerProblem {
         setUpperLimit(upperLimit);
     }
 
-    //TODO
     @Override
     public void evaluate(IntegerSolution integerSolution) {
         int fitness = 0;
-        List<Integer> dispatchList = integerSolution.getVariables();
+        List<Integer> dispatchList = new ArrayList<>(integerSolution.getVariables());
+        graph.setDispatchList(dispatchList, dispatchListLength);
+        List<Integer> startPositions = new ArrayList<Integer>(Collections.nCopies(numOfDrivers, 0));
 
+        Evaluator evaluator = new Evaluator();
+        fitness = evaluator.evaluate(graph, dispatchListLength, startPositions, numOfDrivers);
+        System.out.println(fitness);
         integerSolution.setObjective(0, fitness);
     }
 }
