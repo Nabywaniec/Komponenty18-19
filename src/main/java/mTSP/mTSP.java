@@ -45,6 +45,7 @@ public class mTSP extends AbstractIntegerProblem {
         Evaluator evaluator = new Evaluator();
         fitness = evaluator.evaluate(graph, dispatchListLength, startPositions, numOfDrivers);
         System.out.println(fitness);
+        
         integerSolution.setObjective(0, fitness);
     }
 }

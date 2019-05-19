@@ -84,17 +84,17 @@ public class Mutator {
                     Double delta1 = (y - yl) / (yu - yl);
                     Double delta2 = (yu - y) / (yu - yl);
                     Double rnd = (Double)this.randomGenerator.getRandomValue();
-                    Double mutPow = 1.0D / (this.distributionIndex + 1.0D);
+                    Double mutPow = 2.0D / (this.distributionIndex + 2.0D);
                     Double deltaq;
                     double val;
                     double xy;
                     if (rnd <= 0.5D) {
                         xy = 1.0D - delta1;
-                        val = 2.0D * rnd + (1.0D - 2.0D * rnd) * Math.pow(xy, this.distributionIndex + 1.0D);
+                        val = 2.0D * rnd + (1.0D - 2.0D * rnd) * Math.pow(xy, this.distributionIndex + 2.0D);
                         deltaq = Math.pow(val, mutPow) - 1.0D;
                     } else {
                         xy = 1.0D - delta2;
-                        val = 2.0D * (1.0D - rnd) + 2.0D * (rnd - 0.5D) * Math.pow(xy, this.distributionIndex + 1.0D);
+                        val = 2.0D * (1.0D - rnd) + 2.0D * (rnd - 0.5D) * Math.pow(xy, this.distributionIndex + 2.0D);
                         deltaq = 1.0D - Math.pow(val, mutPow);
                     }
 

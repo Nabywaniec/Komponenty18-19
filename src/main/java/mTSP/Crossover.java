@@ -141,7 +141,7 @@ public class Crossover implements CrossoverOperator<IntegerSolution> {
                     break;
                 }
                 else if((Double) this.randomGenerator.getRandomValue() <= 0.5){
-                    if(i<parent1.getNumberOfVariables()-1) {
+                    if(i<parent1.getNumberOfVariables()-2) {
                         cross(i, offspring, parent1, parent2);
                         cross(i + 1, offspring,parent1,parent2);
                         cross(i+2,offspring,parent1,parent2);

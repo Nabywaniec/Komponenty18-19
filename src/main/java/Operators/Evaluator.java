@@ -13,7 +13,7 @@ public class Evaluator {
 
     public Evaluator() {
         isVisited = new ArrayList<>();
-        max_eval = 1000000000;
+        max_eval = 1000;
     }
 
     public int evaluate(Graph graph, int dispatchListVertexLenght, List<Integer> positions, int M) {
