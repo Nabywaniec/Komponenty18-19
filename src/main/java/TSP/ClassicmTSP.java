@@ -1,8 +1,13 @@
 package TSP;
 
 import Model.Graph;
+import Operators.Evaluator;
 
 import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class ClassicmTSP extends AbstractmTSPPermutationProblem {
 
@@ -34,6 +39,18 @@ public class ClassicmTSP extends AbstractmTSPPermutationProblem {
 
     @Override
     public void evaluate(mTSPPermutationSolution<Integer> integermTSPPermutationSolution) {
+        int fitness = 0;
 
+        List<Integer> startPositions = new ArrayList<Integer>(Collections.nCopies(numOfDrivers, 0));
+        ClassicmTSPEvaluator evaluator = new ClassicmTSPEvaluator();
+        fitness = evaluator.evaluate(graph, startPositions, numOfDrivers, integermTSPPermutationSolution.getVariables());
+
+        try {
+            fw.write(String.valueOf(System.nanoTime() - startTime) + " " + String.valueOf(fitness) + "\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        integermTSPPermutationSolution.setObjective(0, fitness);
     }
 }
