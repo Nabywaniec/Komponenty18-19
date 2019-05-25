@@ -55,7 +55,7 @@ public class DefaultmTSPPermutationSolution
 
     @Override
     public String getVariableValueString(int i) {
-        return null;
+        return ((Integer)this.getVariableValue(i)).toString();
     }
 
     @Override
@@ -65,6 +65,6 @@ public class DefaultmTSPPermutationSolution
 
     @Override
     public Map<Object, Object> getAttributes() {
-        return null;
+        return this.attributes;
     }
 }
