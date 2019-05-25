@@ -3,10 +3,7 @@ package TSP;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.solution.impl.AbstractGenericSolution;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class DefaultmTSPPermutationSolution
         extends AbstractGenericSolution<Integer, mTSPPermutationProblem<?>>
@@ -31,7 +28,21 @@ public class DefaultmTSPPermutationSolution
         for(i = problem.getVertices(); i < problem.getVertices() + problem.getCars(); ++i) {
             this.setVariableValue(i, vals[i-problem.getVertices()]);
         }
+    }
 
+    public DefaultmTSPPermutationSolution(DefaultmTSPPermutationSolution solution) {
+        super(solution.problem);
+
+        int i;
+        for(i = 0; i < ((mTSPPermutationProblem)this.problem).getNumberOfObjectives(); ++i) {
+            this.setObjective(i, solution.getObjective(i));
+        }
+
+        for(i = 0; i < ((mTSPPermutationProblem)this.problem).getNumberOfVariables(); ++i) {
+            this.setVariableValue(i, solution.getVariableValue(i));
+        }
+
+        this.attributes = new HashMap(solution.attributes);
     }
 
     private int[] getRandomArraySum(int arrayLength, int sum) {
@@ -60,7 +71,7 @@ public class DefaultmTSPPermutationSolution
 
     @Override
     public Solution<Integer> copy() {
-        return null;
+        return new DefaultmTSPPermutationSolution(this);
     }
 
     @Override
