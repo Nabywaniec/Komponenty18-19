@@ -1,5 +1,6 @@
 package mTSP;
 
+import org.uma.jmetal.operator.MutationOperator;
 import org.uma.jmetal.problem.IntegerProblem;
 import org.uma.jmetal.solution.IntegerSolution;
 import org.uma.jmetal.solution.util.RepairDoubleSolution;
@@ -8,7 +9,7 @@ import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 import org.uma.jmetal.util.pseudorandom.RandomGenerator;
 
-public class Mutator {
+public class Mutator implements MutationOperator<IntegerSolution> {
     private static final double DEFAULT_PROBABILITY = 0.01D;
     private static final double DEFAULT_DISTRIBUTION_INDEX = 20.0D;
     private double distributionIndex;

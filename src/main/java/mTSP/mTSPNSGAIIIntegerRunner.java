@@ -16,6 +16,8 @@ import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
 
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
 public class mTSPNSGAIIIntegerRunner extends AbstractAlgorithmRunner {
@@ -50,7 +52,14 @@ public class mTSPNSGAIIIntegerRunner extends AbstractAlgorithmRunner {
 
         Graph graph = new Graph();
         graph.setFullGraphStructure(filename);
-        problem = new mTSP(graph, dispatchListLength, numOfDrivers);
+        FileWriter fw = null;
+        try {
+            fw = new FileWriter("fitnessTime.txt");
+            fw.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        problem = new mTSP(graph, dispatchListLength, numOfDrivers, fw);
 
         double crossoverProbability = 0.9 ;
         double crossoverDistributionIndex = 20.0 ;
@@ -58,7 +67,7 @@ public class mTSPNSGAIIIntegerRunner extends AbstractAlgorithmRunner {
 
         double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
         double mutationDistributionIndex = 20.0 ;
-        mutation = new IntegerPolynomialMutation(mutationProbability, mutationDistributionIndex) ;
+        mutation = new Mutator();
 
         selection = new BinaryTournamentSelection<IntegerSolution>() ;
 
@@ -79,6 +88,11 @@ public class mTSPNSGAIIIntegerRunner extends AbstractAlgorithmRunner {
         printFinalSolutionSet(population);
         if (!referenceParetoFront.equals("")) {
             printQualityIndicators(population, referenceParetoFront) ;
+        }
+        try {
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
