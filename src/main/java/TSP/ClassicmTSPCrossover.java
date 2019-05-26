@@ -69,6 +69,9 @@ public class ClassicmTSPCrossover implements CrossoverOperator<mTSPPermutationSo
 
     private void cross(int i, List<mTSPPermutationSolution<Integer>> offspring,
                        mTSPPermutationSolution<Integer> parent1, mTSPPermutationSolution<Integer> parent2) {
+        if(1==1){
+            return;
+        }
         int valueX1 = (Integer) parent1.getVariableValue(i);
         int valueX2 = (Integer) parent2.getVariableValue(i);
 

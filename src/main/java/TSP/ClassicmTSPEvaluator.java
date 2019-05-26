@@ -76,6 +76,7 @@ public class ClassicmTSPEvaluator {
                 }
             }
         }
+        if(step < 500) System.out.println(result);
         return (step < 500) ? result : max_eval;
 
     }
