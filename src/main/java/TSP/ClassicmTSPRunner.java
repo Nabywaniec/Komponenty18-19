@@ -49,7 +49,7 @@ public class ClassicmTSPRunner {
         crossover = new ClassicmTSPCrossover(0.9D);
 
         double mutationProbability = 1.0D / (double)problem.getNumberOfVariables();
-        mutation = new ClassicmTSPMutator(mutationProbability);
+        mutation = new ClassicmTSPMutator(mutationProbability, numOfDrivers);
 
         selection = new BinaryTournamentSelection(new RankingAndCrowdingDistanceComparator());
 

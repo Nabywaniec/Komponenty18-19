@@ -43,15 +43,13 @@ public class ClassicmTSPEvaluator {
             currentDirection.add(1);
         }
 
-
-
         int step = -1;
         int result = 0;
         while (!isAllVisited() && step < 500) {
             step += 1;
             for (int carId = 0; carId < numOfDrivers; carId++) {
                 int currentPositionId = positions.get(carId);
-                if (variablesForDriver.get(carId).size()-1 > currentDirection.get(carId)) {
+                if (variablesForDriver.get(carId).size() -1 > currentDirection.get(carId)) {
                     int nextPositionId = variablesForDriver.get(carId).get(currentDirection.get(carId));
                     currentDirection.set(carId, currentDirection.get(carId) + 1);
                     positions.set(carId, nextPositionId);
