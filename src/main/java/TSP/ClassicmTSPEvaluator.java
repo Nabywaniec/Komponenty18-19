@@ -20,6 +20,7 @@ public class ClassicmTSPEvaluator {
     }
 
     public int evaluate(Graph graph, List<Integer> positions, int numOfDrivers, List<Integer> variables) {
+        System.out.println(variables);
 
         Map<Vertex, List<Edge>> graphStructure = graph.getStructure();
 
@@ -48,12 +49,9 @@ public class ClassicmTSPEvaluator {
         while (!isAllVisited() && step < 500) {
             step += 1;
             for (int carId = 0; carId < numOfDrivers; carId++) {
-                int currentPositionId = positions.get(carId);
-                if (variablesForDriver.get(carId).size() -1 > currentDirection.get(carId)) {
-                    int nextPositionId = variablesForDriver.get(carId).get(currentDirection.get(carId));
-                    currentDirection.set(carId, currentDirection.get(carId) + 1);
-                    positions.set(carId, nextPositionId);
-
+                for(int i=1;i<variablesForDriver.get(carId).size();i++) {
+                    int currentPositionId = variablesForDriver.get(carId).get(i-1);
+                    int nextPositionId = variablesForDriver.get(carId).get(i);
                     isVisited.set(nextPositionId, true);
 
                     Vertex currentVertex = null;
