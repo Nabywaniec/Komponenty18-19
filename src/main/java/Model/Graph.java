@@ -67,7 +67,7 @@ public class Graph {
                 List<String> splitted = Arrays.asList(line.split("\t"));
                 int vertexId = Integer.parseInt(splitted.get(0))-1;
                 int x = Integer.parseInt(splitted.get(1));
-                int y = Integer.parseInt(splitted.get(1));
+                int y = Integer.parseInt(splitted.get(2));
                 Vertex vertex = new Vertex(vertexId, x, y);
                 vertexList.add(vertex);
             }
@@ -95,7 +95,7 @@ public class Graph {
         Map<Vertex, List<Edge>> structure = new HashMap<>();
         for(int i=0;i<distances.length;i++){
             List<Edge> edges = new ArrayList<>();
-            for(int j=0;j<distances.length && j!=i;j++){
+            for(int j=0;j<distances.length;j++){
                 edges.add(new Edge(distances[i][j], i, j));
             }
             structure.put(new Vertex(i), edges);
