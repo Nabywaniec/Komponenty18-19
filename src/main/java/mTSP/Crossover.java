@@ -12,7 +12,6 @@ import java.util.List;
 public class Crossover implements CrossoverOperator<IntegerSolution> {
 
 
-    private static final double EPS = 1.0E-14D;
     private double distributionIndex;
     private double crossoverProbability;
     private RandomGenerator<Double> randomGenerator;
