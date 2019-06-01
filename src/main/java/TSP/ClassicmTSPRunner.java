@@ -33,7 +33,7 @@ public class ClassicmTSPRunner {
         Algorithm<mTSPPermutationSolution<Integer>> algorithm;
 
         String filename = "src\\main\\resources\\input\\mtsp\\mtsp51.txt";
-        int numOfDrivers = 2;
+        int numOfDrivers = 3;
         Graph graph = new Graph();
         graph.setFullGraphStructure(filename);
         FileWriter fw = null;
@@ -70,5 +70,11 @@ public class ClassicmTSPRunner {
         JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
         JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
         JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
+
+        try {
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
