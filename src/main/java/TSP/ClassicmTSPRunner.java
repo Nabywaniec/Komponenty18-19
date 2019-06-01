@@ -32,7 +32,7 @@ public class ClassicmTSPRunner {
         SelectionOperator<List<mTSPPermutationSolution<Integer>>, mTSPPermutationSolution<Integer>> selection;
         Algorithm<mTSPPermutationSolution<Integer>> algorithm;
 
-        String filename = "src\\main\\resources\\input\\mtsp\\mtsp8.txt";
+        String filename = "src\\main\\resources\\input\\mtsp\\mtsp51.txt";
         int numOfDrivers = 2;
         Graph graph = new Graph();
         graph.setFullGraphStructure(filename);

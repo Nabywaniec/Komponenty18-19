@@ -20,7 +20,6 @@ public class ClassicmTSPEvaluator {
     }
 
     public int evaluate(Graph graph, List<Integer> positions, int numOfDrivers, List<Integer> variables) {
-        System.out.println(variables);
 
         Map<Vertex, List<Edge>> graphStructure = graph.getStructure();
 
@@ -74,7 +73,6 @@ public class ClassicmTSPEvaluator {
                 }
             }
         }
-        if(step < 500) System.out.println(result);
         return (step < 500) ? result : max_eval;
 
     }

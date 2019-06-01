@@ -50,7 +50,6 @@ public class ClassicmTSP extends AbstractmTSPPermutationProblem {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("Fitness" + fitness);
         integermTSPPermutationSolution.setObjective(0, fitness);
     }
 }

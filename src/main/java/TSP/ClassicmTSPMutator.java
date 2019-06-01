@@ -36,7 +36,6 @@ public class ClassicmTSPMutator implements MutationOperator<mTSPPermutationSolut
     }
 
     private void doMutation(double mutationProbability, mTSPPermutationSolution<Integer> integermTSPPermutationSolution) {
-        System.out.println(integermTSPPermutationSolution);
         int valuesAmmount = integermTSPPermutationSolution.getNumberOfVariables() - numOfDrivers;
         Random rand = new Random();
         for (int i = 0; i < integermTSPPermutationSolution.getNumberOfVariables() - numOfDrivers; i++) {
