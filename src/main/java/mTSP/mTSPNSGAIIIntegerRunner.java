@@ -44,55 +44,59 @@ public class mTSPNSGAIIIntegerRunner extends AbstractAlgorithmRunner {
             numOfDrivers = Integer.parseInt(args[2]);
             referenceParetoFront = args[3] ;
         } else {
-            filename = "src\\main\\resources\\input\\mtsp\\mtsp8.txt";
-            dispatchListLength = 2;
-            numOfDrivers = 2;
+            filename = "src\\main\\resources\\input\\mtsp\\mtsp51.txt";
+            dispatchListLength = 3;
+            numOfDrivers = 3;
             referenceParetoFront = "";
         }
+        for(int i=0; i< 5; i++){
+            filename = "src\\main\\resources\\input\\mtsp\\";
+            String filenameEnd = "mtsp8";
 
-        Graph graph = new Graph();
-        graph.setFullGraphStructure(filename);
-        FileWriter fw = null;
-        try {
-            fw = new FileWriter("fitnessTime.txt");
-            fw.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        problem = new mTSP(graph, dispatchListLength, numOfDrivers, fw);
+            Graph graph = new Graph();
+            graph.setFullGraphStructure(filename+filenameEnd+".txt");
+            FileWriter fw = null;
+            try {
+                fw = new FileWriter(filenameEnd+"_"+numOfDrivers+"_"+dispatchListLength+"_"+i+".txt");
+                fw.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            problem = new mTSP(graph, dispatchListLength, numOfDrivers, fw);
 
-        double crossoverProbability = 0.9 ;
-        double crossoverDistributionIndex = 20.0 ;
-        crossover = new Crossover(crossoverProbability, crossoverDistributionIndex) ;
+            double crossoverProbability = 0.9 ;
+            double crossoverDistributionIndex = 20.0 ;
+            crossover = new Crossover(crossoverProbability, crossoverDistributionIndex) ;
 
-        double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
-        double mutationDistributionIndex = 20.0 ;
-        mutation = new Mutator();
+            double mutationProbability = 1.0 / problem.getNumberOfVariables() ;
+            double mutationDistributionIndex = 20.0 ;
+            mutation = new Mutator();
 
-        selection = new BinaryTournamentSelection<IntegerSolution>() ;
+            selection = new BinaryTournamentSelection<IntegerSolution>() ;
 
-        int populationSize = 100 ;
-        algorithm = new NSGAIIBuilder<IntegerSolution>(problem, crossover, mutation, populationSize)
-                .setSelectionOperator(selection)
-                .setMaxEvaluations(25000)
-                .build() ;
+            int populationSize = 100 ;
+            algorithm = new NSGAIIBuilder<IntegerSolution>(problem, crossover, mutation, populationSize)
+                    .setSelectionOperator(selection)
+                    .setMaxEvaluations(25000)
+                    .build() ;
 
-        AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
-                .execute() ;
+            AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
+                    .execute() ;
 
-        List<IntegerSolution> population = algorithm.getResult() ;
-        long computingTime = algorithmRunner.getComputingTime() ;
+            List<IntegerSolution> population = algorithm.getResult() ;
+            long computingTime = algorithmRunner.getComputingTime() ;
 
-        JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
+            JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 
-        printFinalSolutionSet(population);
-        if (!referenceParetoFront.equals("")) {
-            printQualityIndicators(population, referenceParetoFront) ;
-        }
-        try {
-            fw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+            printFinalSolutionSet(population);
+            if (!referenceParetoFront.equals("")) {
+                printQualityIndicators(population, referenceParetoFront) ;
+            }
+            try {
+                fw.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

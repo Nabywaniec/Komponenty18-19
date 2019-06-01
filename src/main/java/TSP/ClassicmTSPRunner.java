@@ -32,49 +32,53 @@ public class ClassicmTSPRunner {
         SelectionOperator<List<mTSPPermutationSolution<Integer>>, mTSPPermutationSolution<Integer>> selection;
         Algorithm<mTSPPermutationSolution<Integer>> algorithm;
 
-        String filename = "src\\main\\resources\\input\\mtsp\\mtsp51.txt";
-        int numOfDrivers = 3;
-        Graph graph = new Graph();
-        graph.setFullGraphStructure(filename);
-        FileWriter fw = null;
-        try {
-            fw = new FileWriter("fitnessTime.txt");
-            fw.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        for(int i=0; i< 5; i++){
+            String filename = "src\\main\\resources\\input\\mtsp\\";
+            String filenameEnd = "mtsp8";
 
-        problem = new ClassicmTSP(graph, numOfDrivers, fw);
+            int numOfDrivers = 3;
+            Graph graph = new Graph();
+            graph.setFullGraphStructure(filename+filenameEnd+".txt");
+            FileWriter fw = null;
+            try {
+                fw = new FileWriter(filenameEnd+"_"+numOfDrivers+"_"+i+".txt");
+                fw.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
-        crossover = new ClassicmTSPCrossover(0.9D);
+            problem = new ClassicmTSP(graph, numOfDrivers, fw);
 
-        double mutationProbability = 1.0D / (double)problem.getNumberOfVariables();
-        mutation = new ClassicmTSPMutator(mutationProbability, numOfDrivers);
+            crossover = new ClassicmTSPCrossover(0.9D);
 
-        selection = new BinaryTournamentSelection(new RankingAndCrowdingDistanceComparator());
+            double mutationProbability = 1.0D / (double)problem.getNumberOfVariables();
+            mutation = new ClassicmTSPMutator(mutationProbability, numOfDrivers);
 
-        algorithm = (new GeneticAlgorithmBuilder(problem, crossover, mutation))
-                .setPopulationSize(100)
-                .setMaxEvaluations(250000)
-                .setSelectionOperator(selection).build();
+            selection = new BinaryTournamentSelection(new RankingAndCrowdingDistanceComparator());
 
-        AlgorithmRunner algorithmRunner = (new AlgorithmRunner.Executor(algorithm))
-                .execute();
+            algorithm = (new GeneticAlgorithmBuilder(problem, crossover, mutation))
+                    .setPopulationSize(100)
+                    .setMaxEvaluations(250000)
+                    .setSelectionOperator(selection).build();
 
-        mTSPPermutationSolution<Integer> solution = (mTSPPermutationSolution)algorithm.getResult();
-        List<mTSPPermutationSolution<Integer>> population = new ArrayList(1);
-        population.add(solution);
+            AlgorithmRunner algorithmRunner = (new AlgorithmRunner.Executor(algorithm))
+                    .execute();
 
-        long computingTime = algorithmRunner.getComputingTime();
-        (new SolutionListOutput(population)).setSeparator("\t").setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv")).setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv")).print();
-        JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
-        JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
-        JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
+            mTSPPermutationSolution<Integer> solution = (mTSPPermutationSolution)algorithm.getResult();
+            List<mTSPPermutationSolution<Integer>> population = new ArrayList(1);
+            population.add(solution);
 
-        try {
-            fw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+            long computingTime = algorithmRunner.getComputingTime();
+            (new SolutionListOutput(population)).setSeparator("\t").setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv")).setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv")).print();
+            JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
+            JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
+            JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
+
+            try {
+                fw.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
