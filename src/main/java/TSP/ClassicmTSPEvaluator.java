@@ -67,7 +67,7 @@ public class ClassicmTSPEvaluator {
 
                     List<Edge> egdes = graphStructure.get(currentVertex);
                     for (Edge edge : egdes) {
-                        if (edge.getFirstVertexId() == currentVertex.getId() || edge.getSecondVertexId() == nextVertex.getId()) {
+                        if (edge.getFirstVertexId() == currentVertex.getId() && edge.getSecondVertexId() == nextVertex.getId()) {
                             result += edge.getCost();
                         }
                     }
