@@ -45,13 +45,13 @@ public class mTSPNSGAIIIntegerRunner extends AbstractAlgorithmRunner {
             referenceParetoFront = args[3] ;
         } else {
             filename = "src\\main\\resources\\input\\mtsp\\mtsp51.txt";
-            dispatchListLength = 3;
-            numOfDrivers = 3;
+            dispatchListLength = 7;
+            numOfDrivers = 7;
             referenceParetoFront = "";
         }
         for(int i=0; i< 5; i++){
             filename = "src\\main\\resources\\input\\mtsp\\";
-            String filenameEnd = "mtsp8";
+            String filenameEnd = "mtsp51";
 
             Graph graph = new Graph();
             graph.setFullGraphStructure(filename+filenameEnd+".txt");

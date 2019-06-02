@@ -34,9 +34,9 @@ public class ClassicmTSPRunner {
 
         for(int i=0; i< 5; i++){
             String filename = "src\\main\\resources\\input\\mtsp\\";
-            String filenameEnd = "mtsp8";
+            String filenameEnd = "mtsp51";
 
-            int numOfDrivers = 3;
+            int numOfDrivers =7 ;
             Graph graph = new Graph();
             graph.setFullGraphStructure(filename+filenameEnd+".txt");
             FileWriter fw = null;

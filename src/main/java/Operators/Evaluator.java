@@ -13,13 +13,14 @@ public class Evaluator {
 
     public Evaluator() {
         isVisited = new ArrayList<>();
-        max_eval = 1000;
+        max_eval = 100000;
     }
 
     public int evaluate(Graph graph, int dispatchListVertexLenght, List<Integer> positions, int M) {
         Map<Integer, List<Integer>> redirections = graph.getDispatchList();
         Map<Vertex, List<Edge>> graphStructure = graph.getStructure();
         Map<Integer, Integer> dispatchPointers = new HashMap<Integer, Integer>();
+        List<Integer> startPositions = new ArrayList<>();
         for(int vertexId = 0; vertexId < graph.getVertexNum(); vertexId++){
             dispatchPointers.put(vertexId, 0);
         }
@@ -28,6 +29,7 @@ public class Evaluator {
 
         for (int carId = 0; carId < M; carId++) {
             isVisited.set(positions.get(carId), true);
+            startPositions.add(positions.get(carId));
         }
 
         int step = -1;
@@ -41,6 +43,30 @@ public class Evaluator {
                 positions.set(carId, nextPositionId);
 
                 isVisited.set(nextPositionId, true);
+
+                Vertex currentVertex = null;
+                Vertex nextVertex = null;
+                for(Vertex vertex : graphStructure.keySet()){
+                    if(vertex.getId() == currentPositionId) {
+                        currentVertex = vertex;
+                    }
+                    if(vertex.getId() == nextPositionId) {
+                        nextVertex = vertex;
+                    }
+                }
+
+                List<Edge> egdes = graphStructure.get(currentVertex);
+                for (Edge edge : egdes) {
+                    if (edge.getFirstVertexId() == currentVertex.getId() && edge.getSecondVertexId() == nextVertex.getId()) {
+                        result += edge.getCost();
+                    }
+                }
+            }
+        }
+        if(step <500){
+            for (int carId = 0; carId < M; carId++) {
+                int currentPositionId = positions.get(carId);
+                int nextPositionId = startPositions.get(carId);
 
                 Vertex currentVertex = null;
                 Vertex nextVertex = null;

@@ -2,8 +2,8 @@
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 <record>
-  <date>2019-05-26T22:55:51</date>
-  <millis>1558904151176</millis>
+  <date>2019-06-01T18:27:01</date>
+  <millis>1559406421980</millis>
   <sequence>0</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
@@ -13,19 +13,19 @@
   <message>Loggers configured with null</message>
 </record>
 <record>
-  <date>2019-05-26T22:55:51</date>
-  <millis>1558904151226</millis>
+  <date>2019-06-01T18:27:02</date>
+  <millis>1559406422081</millis>
   <sequence>1</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>TSP.ClassicmTSPRunner</class>
   <method>main</method>
   <thread>1</thread>
-  <message>Total execution time: 23066ms</message>
+  <message>Total execution time: 76712ms</message>
 </record>
 <record>
-  <date>2019-05-26T22:55:51</date>
-  <millis>1558904151227</millis>
+  <date>2019-06-01T18:27:02</date>
+  <millis>1559406422083</millis>
   <sequence>2</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
@@ -35,9 +35,141 @@
   <message>Objectives values have been written to file FUN.tsv</message>
 </record>
 <record>
-  <date>2019-05-26T22:55:51</date>
-  <millis>1558904151227</millis>
+  <date>2019-06-01T18:27:02</date>
+  <millis>1559406422084</millis>
   <sequence>3</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>TSP.ClassicmTSPRunner</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>Variables values have been written to file VAR.tsv</message>
+</record>
+<record>
+  <date>2019-06-01T18:28:23</date>
+  <millis>1559406503299</millis>
+  <sequence>4</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>TSP.ClassicmTSPRunner</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>Total execution time: 81162ms</message>
+</record>
+<record>
+  <date>2019-06-01T18:28:23</date>
+  <millis>1559406503302</millis>
+  <sequence>5</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>TSP.ClassicmTSPRunner</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>Objectives values have been written to file FUN.tsv</message>
+</record>
+<record>
+  <date>2019-06-01T18:28:23</date>
+  <millis>1559406503304</millis>
+  <sequence>6</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>TSP.ClassicmTSPRunner</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>Variables values have been written to file VAR.tsv</message>
+</record>
+<record>
+  <date>2019-06-01T18:29:33</date>
+  <millis>1559406573958</millis>
+  <sequence>7</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>TSP.ClassicmTSPRunner</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>Total execution time: 70567ms</message>
+</record>
+<record>
+  <date>2019-06-01T18:29:33</date>
+  <millis>1559406573960</millis>
+  <sequence>8</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>TSP.ClassicmTSPRunner</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>Objectives values have been written to file FUN.tsv</message>
+</record>
+<record>
+  <date>2019-06-01T18:29:33</date>
+  <millis>1559406573962</millis>
+  <sequence>9</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>TSP.ClassicmTSPRunner</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>Variables values have been written to file VAR.tsv</message>
+</record>
+<record>
+  <date>2019-06-01T18:30:51</date>
+  <millis>1559406651388</millis>
+  <sequence>10</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>TSP.ClassicmTSPRunner</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>Total execution time: 77360ms</message>
+</record>
+<record>
+  <date>2019-06-01T18:30:51</date>
+  <millis>1559406651391</millis>
+  <sequence>11</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>TSP.ClassicmTSPRunner</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>Objectives values have been written to file FUN.tsv</message>
+</record>
+<record>
+  <date>2019-06-01T18:30:51</date>
+  <millis>1559406651392</millis>
+  <sequence>12</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>TSP.ClassicmTSPRunner</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>Variables values have been written to file VAR.tsv</message>
+</record>
+<record>
+  <date>2019-06-01T18:32:10</date>
+  <millis>1559406730492</millis>
+  <sequence>13</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>TSP.ClassicmTSPRunner</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>Total execution time: 79058ms</message>
+</record>
+<record>
+  <date>2019-06-01T18:32:10</date>
+  <millis>1559406730494</millis>
+  <sequence>14</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>TSP.ClassicmTSPRunner</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>Objectives values have been written to file FUN.tsv</message>
+</record>
+<record>
+  <date>2019-06-01T18:32:10</date>
+  <millis>1559406730495</millis>
+  <sequence>15</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>TSP.ClassicmTSPRunner</class>
