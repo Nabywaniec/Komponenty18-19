@@ -59,7 +59,7 @@ public class VRPSDRunner extends AbstractAlgorithmRunner {
         graph.setFullGraphStructure(folderName+filename+".txt");
         FileWriter fw = null;
         try {
-            fw = new FileWriter(filename+"_"+numOfDrivers+"_"+dispatchListLength+"_"+".txt");
+            fw = new FileWriter(filename+"_"+numOfDrivers+"_"+dispatchListLength+".txt");
             fw.flush();
         } catch (IOException e) {
             e.printStackTrace();
