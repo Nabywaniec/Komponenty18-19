@@ -16,14 +16,14 @@ public class VRPSD extends AbstractIntegerProblem {
     private Graph graph;
     private int numOfDrivers;
     private FileWriter fw;
-    private int alpha;
-    private int gamma;
-    private int capacity;
+    private double alpha;
+    private double gamma;
+    private double capacity;
 
     private long startTime;
 
     public VRPSD(Graph graph, int dispatchListLength, int numOfDrivers,
-                 int alpha, int gamma, int capacity, FileWriter fw){
+                 double alpha, double gamma, double capacity, FileWriter fw){
         this.graph = graph;
         this.dispatchListLength = dispatchListLength;
         this.numOfDrivers = numOfDrivers;
