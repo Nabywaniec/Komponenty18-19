@@ -37,7 +37,7 @@ public class VRPSDEvaluator {
                 extractDispatchListsFromSolution(vrpsdSolution.getVariables(), dispatchListLength, vertexNum);
         ArrayList<Integer> dispatchListsPointers = new ArrayList<>(Collections.nCopies(vertexNum, 0));
         Map<Vertex, List<Edge>> graphStructure = graph.getStructure();
-        ArrayList<Double> customersCurrentDemand = vrpsdProblem.getCustomerDemands();
+        ArrayList<Double> customersCurrentDemand = new ArrayList<>(vrpsdProblem.getCustomerDemands());
 
 
 //        int step = -1;
