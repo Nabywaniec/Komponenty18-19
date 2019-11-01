@@ -15,10 +15,10 @@ public class VRPSD extends AbstractIntegerProblem {
     private int dispatchListLength;
     private Graph graph;
     private int numOfDrivers;
-    private FileWriter fw;
     private double alpha;
     private double gamma;
     private double capacity;
+    private FileWriter fw;
 
     private long startTime;
 
@@ -55,13 +55,12 @@ public class VRPSD extends AbstractIntegerProblem {
         int fitness = 0;
         List<Integer> dispatchList = new ArrayList<>(integerSolution.getVariables());
         graph.setDispatchList(dispatchList, dispatchListLength);
-        List<Integer> startPositions = new ArrayList<Integer>(Collections.nCopies(numOfDrivers, 0));
 
-        Evaluator evaluator = new Evaluator();
-        fitness = evaluator.evaluate(graph, dispatchListLength, startPositions, numOfDrivers);
+        VRPSDEvaluator evaluator = new VRPSDEvaluator();
+        fitness = evaluator.evaluate(this, integerSolution, graph);
 
         try {
-            fw.write(String.valueOf(System.nanoTime() - startTime) + " " + String.valueOf(fitness) + "\n");
+            fw.write((System.nanoTime() - startTime) + " " + fitness + "\n");
         } catch (IOException e) {
             e.printStackTrace();
         }
