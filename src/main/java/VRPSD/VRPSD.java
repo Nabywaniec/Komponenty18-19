@@ -1,32 +1,56 @@
 package VRPSD;
 
 import Model.Graph;
-import Operators.Evaluator;
 import org.uma.jmetal.problem.impl.AbstractIntegerProblem;
 import org.uma.jmetal.solution.IntegerSolution;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class VRPSD extends AbstractIntegerProblem {
-    private int dispatchListLength;
     private Graph graph;
-    private int numOfDrivers;
+    private int dispatchListLength;
+    private int numOfVehicles;
     private double alpha;
     private double gamma;
     private double capacity;
     private FileWriter fw;
 
     private long startTime;
+    private ArrayList<Double> customerDemands = new ArrayList<>();
 
-    public VRPSD(Graph graph, int dispatchListLength, int numOfDrivers,
+    public int getDispatchListLength() {
+        return dispatchListLength;
+    }
+
+    public int getNumOfVehicles() {
+        return numOfVehicles;
+    }
+
+    public double getAlpha() {
+        return alpha;
+    }
+
+    public double getGamma() {
+        return gamma;
+    }
+
+    public double getCapacity() {
+        return capacity;
+    }
+
+    public ArrayList<Double> getCustomerDemands() {
+        return customerDemands;
+    }
+
+    public VRPSD(Graph graph, int dispatchListLength, int numOfVehicles,
                  double alpha, double gamma, double capacity, FileWriter fw){
         this.graph = graph;
         this.dispatchListLength = dispatchListLength;
-        this.numOfDrivers = numOfDrivers;
+        this.numOfVehicles = numOfVehicles;
         this.alpha = alpha;
         this.gamma = gamma;
         this.capacity = capacity;
@@ -46,8 +70,17 @@ public class VRPSD extends AbstractIntegerProblem {
         setLowerLimit(lowerLimit);
         setUpperLimit(upperLimit);
 
+        for (int i=1; i<=graph.getVertexNum(); i++) {
+            customerDemands.add(demandFunction(this.alpha, this.gamma, this.capacity));
+        }
+
         this.fw = fw;
         startTime = System.nanoTime();
+    }
+
+    private Double demandFunction(double alpha, double gamma, double capacity) {
+        double delta = ThreadLocalRandom.current().nextDouble(0, 1);
+        return Math.floor(alpha * capacity + delta * (gamma - alpha) * capacity);
     }
 
     @Override
