@@ -86,8 +86,6 @@ public class VRPSD extends AbstractIntegerProblem {
     @Override
     public void evaluate(IntegerSolution integerSolution) {
         int fitness = 0;
-        List<Integer> dispatchList = new ArrayList<>(integerSolution.getVariables());
-        graph.setDispatchList(dispatchList, dispatchListLength);
 
         VRPSDEvaluator evaluator = new VRPSDEvaluator();
         fitness = evaluator.evaluate(this, integerSolution, graph);
