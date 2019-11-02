@@ -19,7 +19,7 @@ public class ClassicmTSPEvaluator {
         this.max_eval = 1000;
     }
 
-    public int evaluate(Graph graph, List<Integer> positions, int numOfDrivers, List<Integer> variables) {
+    public int evaluate(Graph graph, int numOfDrivers, List<Integer> variables) {
 
         Map<Vertex, List<Edge>> graphStructure = graph.getStructure();
 

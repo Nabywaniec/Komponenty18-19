@@ -16,7 +16,7 @@ public class Evaluator {
         max_eval = 100000;
     }
 
-    public int evaluate(Graph graph, int dispatchListVertexLenght, List<Integer> positions, int M) {
+    public int evaluate(Graph graph, int dispatchListVertexLenght, List<Integer> positions, int M, List<Integer> commodityOrder) {
         Map<Integer, List<Integer>> redirections = graph.getDispatchList();
         Map<Vertex, List<Edge>> graphStructure = graph.getStructure();
         Map<Integer, Integer> dispatchPointers = new HashMap<Integer, Integer>();
@@ -101,6 +101,13 @@ public class Evaluator {
     private boolean isAllVisited() {
         for (Boolean visited : isVisited) {
             if (!visited) return false;
+        }
+        return true;
+    }
+
+    private boolean allCommoditySupplied(List<Integer >commodityOrder){
+        for(Integer order : commodityOrder){
+            if(order!=0) return false;
         }
         return true;
     }
