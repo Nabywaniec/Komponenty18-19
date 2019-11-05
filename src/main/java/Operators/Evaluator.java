@@ -16,7 +16,7 @@ public class Evaluator {
         max_eval = 100000;
     }
 
-    public int evaluate(Graph graph, int dispatchListVertexLenght, List<Integer> positions, int M, List<Integer> commodityOrder) {
+    public int evaluate(Graph graph, int dispatchListVertexLenght, List<Integer> positions, int M) {
         Map<Integer, List<Integer>> redirections = graph.getDispatchList();
         Map<Vertex, List<Edge>> graphStructure = graph.getStructure();
         Map<Integer, Integer> dispatchPointers = new HashMap<Integer, Integer>();

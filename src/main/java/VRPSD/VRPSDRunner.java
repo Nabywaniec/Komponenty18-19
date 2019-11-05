@@ -51,7 +51,7 @@ public class VRPSDRunner extends AbstractAlgorithmRunner {
             numOfDrivers = 5;
             alpha = 0.1;
             gamma = 0.3;
-            capacity = 1;
+            capacity = 10.0;
             referenceParetoFront = "";
         }
 

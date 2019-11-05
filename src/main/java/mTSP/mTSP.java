@@ -50,7 +50,7 @@ public class mTSP extends AbstractIntegerProblem {
         List<Integer> startPositions = new ArrayList<Integer>(Collections.nCopies(numOfDrivers, 0));
 
         Evaluator evaluator = new Evaluator();
-        fitness = evaluator.evaluate(graph, dispatchListLength, startPositions, numOfDrivers);
+        fitness = evaluator.evaluate(graph,dispatchListLength, startPositions, numOfDrivers);
 
         //System.out.println((System.nanoTime() - startTime) + " " + fitness);
         try {
