@@ -29,6 +29,7 @@ public class VRPSDRunner extends AbstractAlgorithmRunner {
         MutationOperator<IntegerSolution> mutation;
         SelectionOperator<List<IntegerSolution>, IntegerSolution> selection;
         String folderName  ="src\\main\\resources\\VRPSD\\only_graph\\";
+        String folderName2  ="src\\main\\resources\\VRPSD\\full\\";
 
 
         String filename = "";
@@ -52,7 +53,7 @@ public class VRPSDRunner extends AbstractAlgorithmRunner {
             numOfDrivers = 5;
             alpha = 0.1;
             gamma = 0.3;
-            capacity = 10.0;
+            capacity = 6000.0;
             referenceParetoFront = "";
         }
 
@@ -66,7 +67,8 @@ public class VRPSDRunner extends AbstractAlgorithmRunner {
             e.printStackTrace();
         }
         DemandFactory demandFactory = new DemandFactory();
-        ArrayList<Double> customerDemands = demandFactory.createCustomersDemands(graph.getVertexNum(), alpha, gamma, capacity);
+        //ArrayList<Double> customerDemands = demandFactory.createCustomersDemands(graph.getVertexNum(), alpha, gamma, capacity);
+        ArrayList<Double> customerDemands = demandFactory.readCustomersDemandsFromFile(folderName2+filename);
 
         problem = new VRPSD(graph, customerDemands, dispatchListLength, numOfDrivers, capacity, fw);
 
