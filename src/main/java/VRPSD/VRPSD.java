@@ -8,19 +8,16 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class VRPSD extends AbstractIntegerProblem {
     private Graph graph;
+    private ArrayList<Double> customerDemands;
     private int dispatchListLength;
     private int numOfVehicles;
-    private double alpha;
-    private double gamma;
     private double capacity;
     private FileWriter fw;
 
     private long startTime;
-    private ArrayList<Double> customerDemands = new ArrayList<>();
 
     public int getDispatchListLength() {
         return dispatchListLength;
@@ -30,29 +27,16 @@ public class VRPSD extends AbstractIntegerProblem {
         return numOfVehicles;
     }
 
-    public double getAlpha() {
-        return alpha;
-    }
-
-    public double getGamma() {
-        return gamma;
-    }
-
     public double getCapacity() {
         return capacity;
     }
 
-    public ArrayList<Double> getCustomerDemands() {
-        return customerDemands;
-    }
-
-    public VRPSD(Graph graph, int dispatchListLength, int numOfVehicles,
-                 double alpha, double gamma, double capacity, FileWriter fw){
+    public VRPSD(Graph graph, ArrayList<Double> customerDemands, int dispatchListLength,
+                 int numOfVehicles, double capacity, FileWriter fw){
         this.graph = graph;
+        this.customerDemands = customerDemands;
         this.dispatchListLength = dispatchListLength;
         this.numOfVehicles = numOfVehicles;
-        this.alpha = alpha;
-        this.gamma = gamma;
         this.capacity = capacity;
 
         this.setNumberOfVariables(this.graph.getVertexNum()*this.dispatchListLength);
@@ -70,17 +54,8 @@ public class VRPSD extends AbstractIntegerProblem {
         setLowerLimit(lowerLimit);
         setUpperLimit(upperLimit);
 
-        for (int i=1; i<=graph.getVertexNum(); i++) {
-            customerDemands.add(demandFunction(this.alpha, this.gamma, this.capacity));
-        }
-
         this.fw = fw;
         startTime = System.nanoTime();
-    }
-
-    private Double demandFunction(double alpha, double gamma, double capacity) {
-        double delta = ThreadLocalRandom.current().nextDouble(0, 1);
-        return Math.floor(alpha * capacity + delta * (gamma - alpha) * capacity);
     }
 
     @Override
@@ -88,7 +63,7 @@ public class VRPSD extends AbstractIntegerProblem {
         int fitness = 0;
 
         VRPSDEvaluator evaluator = new VRPSDEvaluator();
-        fitness = evaluator.evaluate(this, integerSolution, graph);
+        fitness = evaluator.evaluate(this, integerSolution, graph, customerDemands);
 
         try {
             fw.write((System.nanoTime() - startTime) + " " + fitness + "\n");

@@ -26,7 +26,7 @@ public class VRPSDEvaluator {
         return dispatchLists;
     }
 
-    public int evaluate(VRPSD vrpsdProblem, IntegerSolution vrpsdSolution, Graph graph) {
+    public int evaluate(VRPSD vrpsdProblem, IntegerSolution vrpsdSolution, Graph graph, ArrayList<Double> customersDemand) {
         int numOfVehicles = vrpsdProblem.getNumOfVehicles();
         double vehicleCapacity = vrpsdProblem.getCapacity();
         int dispatchListLength = vrpsdProblem.getDispatchListLength();
@@ -38,7 +38,7 @@ public class VRPSDEvaluator {
                 extractDispatchListsFromSolution(vrpsdSolution.getVariables(), dispatchListLength, vertexNum);
         ArrayList<Integer> dispatchListsPointers = new ArrayList<>(Collections.nCopies(vertexNum, 0));
         Map<Vertex, List<Edge>> graphStructure = graph.getStructure();
-        ArrayList<Double> customersCurrentDemand = new ArrayList<>(vrpsdProblem.getCustomerDemands());
+        ArrayList<Double> customersCurrentDemand = new ArrayList<>(customersDemand);
 
         int step = -1;
         int result = 0;
