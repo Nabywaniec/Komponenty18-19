@@ -64,7 +64,7 @@ public class Graph {
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = br.readLine()) != null) {
-                List<String> splitted = Arrays.asList(line.split("\t"));
+                List<String> splitted = Arrays.asList(line.split("\t| "));
                 int vertexId = Integer.parseInt(splitted.get(0))-1;
                 int x = Integer.parseInt(splitted.get(1));
                 int y = Integer.parseInt(splitted.get(2));

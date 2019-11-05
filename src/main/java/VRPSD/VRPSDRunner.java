@@ -28,7 +28,7 @@ public class VRPSDRunner extends AbstractAlgorithmRunner {
         CrossoverOperator<IntegerSolution> crossover;
         MutationOperator<IntegerSolution> mutation;
         SelectionOperator<List<IntegerSolution>, IntegerSolution> selection;
-        String folderName  ="src\\main\\resources\\VRPSD\\";
+        String folderName  ="src\\main\\resources\\VRPSD\\only_graph\\";
 
 
         String filename = "";
@@ -47,7 +47,7 @@ public class VRPSDRunner extends AbstractAlgorithmRunner {
             capacity = Double.parseDouble(args[5]);
 
         } else {
-            filename = "mtsp51";
+            filename = "eil22.sd";
             dispatchListLength = 5;
             numOfDrivers = 5;
             alpha = 0.1;
@@ -57,7 +57,7 @@ public class VRPSDRunner extends AbstractAlgorithmRunner {
         }
 
         Graph graph = new Graph();
-        graph.setFullGraphStructure(folderName+filename+".txt");
+        graph.setFullGraphStructure(folderName+filename);
         FileWriter fw = null;
         try {
             fw = new FileWriter(filename+"_"+numOfDrivers+"_"+dispatchListLength+".txt");
