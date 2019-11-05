@@ -17,6 +17,7 @@ import org.uma.jmetal.util.JMetalLogger;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class VRPSDRunner extends AbstractAlgorithmRunner {
@@ -27,7 +28,7 @@ public class VRPSDRunner extends AbstractAlgorithmRunner {
         CrossoverOperator<IntegerSolution> crossover;
         MutationOperator<IntegerSolution> mutation;
         SelectionOperator<List<IntegerSolution>, IntegerSolution> selection;
-        String folderName  ="src\\main\\resources\\input\\mtsp\\";
+        String folderName  ="src\\main\\resources\\VRPSD\\";
 
 
         String filename = "";
@@ -64,7 +65,10 @@ public class VRPSDRunner extends AbstractAlgorithmRunner {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        problem = new VRPSD(graph, dispatchListLength, numOfDrivers, alpha, gamma, capacity, fw);
+        DemandFactory demandFactory = new DemandFactory();
+        ArrayList<Double> customerDemands = demandFactory.createCustomersDemands(graph.getVertexNum(), alpha, gamma, capacity);
+
+        problem = new VRPSD(graph, customerDemands, dispatchListLength, numOfDrivers, capacity, fw);
 
         double crossoverProbability = 0.9 ;
         double crossoverDistributionIndex = 20.0 ;
