@@ -47,7 +47,7 @@ public class VRPSD extends AbstractIntegerProblem {
         List<Integer> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
 
         for (int i = 0; i < getNumberOfVariables(); i++) {
-            lowerLimit.add(0);
+            lowerLimit.add(1);
             upperLimit.add(this.graph.getVertexNum()-1);
         }
 
