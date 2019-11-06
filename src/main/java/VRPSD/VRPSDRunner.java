@@ -52,18 +52,18 @@ public class VRPSDRunner extends AbstractAlgorithmRunner {
             capacity = Double.parseDouble(args[5]);
 
         } else {
-            filename = "eil22.sd";
-            dispatchListLength = 3;
-            numOfDrivers = 3;
+            filename = "S51D4.sd";
+            dispatchListLength = 10;
+            numOfDrivers = 30;
             alpha = 0.1;
             gamma = 0.3;
-            capacity = 4.0;
+            capacity = 160.0;
             referenceParetoFront = "";
         }
 
         Graph graph = new Graph();
-        //graph.setFullGraphStructure(folderName+filename);
-        graph.setStructure("src/main/resources/VRPSD/VRPSDtest.txt");
+        graph.setFullGraphStructure(onlyGraphFolderName+filename);
+        //graph.setStructure("src/main/resources/VRPSD/VRPSDtest.txt");
 
         FileWriter fw = null;
         try {
@@ -74,8 +74,8 @@ public class VRPSDRunner extends AbstractAlgorithmRunner {
         }
         DemandFactory demandFactory = new DemandFactory();
         //ArrayList<Double> customerDemands = demandFactory.createCustomersDemands(graph.getVertexNum(), alpha, gamma, capacity);
-        //ArrayList<Double> customerDemands = demandFactory.readCustomersDemandsFromFile(folderName2+filename);
-        ArrayList<Double> customerDemands = new ArrayList<Double>(){{add(0.0); add(3.0); add(3.0); add(3.0); add(3.0);}};
+        ArrayList<Double> customerDemands = demandFactory.readCustomersDemandsFromFile(fullDataFolderName+filename);
+        //ArrayList<Double> customerDemands = new ArrayList<Double>(){{add(0.0); add(3.0); add(3.0); add(3.0); add(3.0);}};
 
         problem = new VRPSD(graph, customerDemands, dispatchListLength, numOfDrivers, capacity, fw);
 
