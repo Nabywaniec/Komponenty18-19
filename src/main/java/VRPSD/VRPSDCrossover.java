@@ -23,12 +23,12 @@ public class VRPSDCrossover implements CrossoverOperator<IntegerSolution> {
 
     @Override
     public int getNumberOfRequiredParents() {
-        return 0;
+        return 2;
     }
 
     @Override
     public int getNumberOfGeneratedChildren() {
-        return 0;
+        return 1;
     }
 
     @Override
