@@ -41,12 +41,14 @@ public class Graph {
                 int i = 0;
                 for (String neighbour : neighbours) {
                     neighboursList.add(new Edge(Integer.parseInt(edgeCosts[i]), vertexId, Integer.parseInt(neighbour)));
+                    i++;
                 }
                 structure.put(vertex, neighboursList);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+        this.vertexNum = structure.size();
     }
 
     public void setFullGraphStructure(String fileName){
