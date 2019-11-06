@@ -55,7 +55,7 @@ public class VRPSDEvaluator {
                         currentVehiclesLoad.set(carId, currentVehiclesLoad.get(carId) - customersCurrentDemand.get(nextPositionId));
                         customersCurrentDemand.set(nextPositionId, 0.0);
                     } else {
-                        customersCurrentDemand.set(nextPositionId, customersCurrentDemand.get(carId) - currentVehiclesLoad.get(carId));
+                        customersCurrentDemand.set(nextPositionId, customersCurrentDemand.get(nextPositionId) - currentVehiclesLoad.get(carId));
                         currentVehiclesLoad.set(carId, 0.0);
                     }
                     result += addEdgeCost(currentPositionId, nextPositionId, graphStructure);
