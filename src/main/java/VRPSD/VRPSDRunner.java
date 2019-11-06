@@ -63,18 +63,9 @@ public class VRPSDRunner extends AbstractAlgorithmRunner {
 
         Graph graph = new Graph();
         //graph.setFullGraphStructure(folderName+filename);
-
         graph.setStructure("src/main/resources/VRPSD/VRPSDtest.txt");
 
-        Map<Vertex, List<Edge>> structure = graph.getStructure();
-        for (Map.Entry<Vertex, List<Edge>> entry : structure.entrySet()){
-            System.out.println("Key = " + entry.getKey().getId());
-            for(Edge edge : entry.getValue()){
-                System.out.println(edge.getFirstVertexId() + ":" + edge.getSecondVertexId()+":"+edge.getCost());
-            }
-        }
-
-    FileWriter fw = null;
+        FileWriter fw = null;
         try {
             fw = new FileWriter(filename+"_"+numOfDrivers+"_"+dispatchListLength+".txt");
             fw.flush();
