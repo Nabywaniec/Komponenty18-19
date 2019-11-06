@@ -1,6 +1,9 @@
 package VRPSD;
 
+import Model.Edge;
 import Model.Graph;
+import Model.Vertex;
+import Operators.Evaluator;
 import mTSP.mTSP;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
@@ -19,6 +22,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class VRPSDRunner extends AbstractAlgorithmRunner {
 
@@ -28,8 +32,8 @@ public class VRPSDRunner extends AbstractAlgorithmRunner {
         CrossoverOperator<IntegerSolution> crossover;
         MutationOperator<IntegerSolution> mutation;
         SelectionOperator<List<IntegerSolution>, IntegerSolution> selection;
-        String folderName  ="src\\main\\resources\\VRPSD\\only_graph\\";
-        String folderName2  ="src\\main\\resources\\VRPSD\\full\\";
+        String onlyGraphFolderName  ="src\\main\\resources\\VRPSD\\only_graph\\";
+        String fullDataFolderName  ="src\\main\\resources\\VRPSD\\full\\";
 
 
         String filename = "";
@@ -49,17 +53,28 @@ public class VRPSDRunner extends AbstractAlgorithmRunner {
 
         } else {
             filename = "eil22.sd";
-            dispatchListLength = 5;
-            numOfDrivers = 5;
+            dispatchListLength = 3;
+            numOfDrivers = 3;
             alpha = 0.1;
             gamma = 0.3;
-            capacity = 6000.0;
+            capacity = 4.0;
             referenceParetoFront = "";
         }
 
         Graph graph = new Graph();
-        graph.setFullGraphStructure(folderName+filename);
-        FileWriter fw = null;
+        //graph.setFullGraphStructure(folderName+filename);
+
+        graph.setStructure("src/main/resources/VRPSD/VRPSDtest.txt");
+
+        Map<Vertex, List<Edge>> structure = graph.getStructure();
+        for (Map.Entry<Vertex, List<Edge>> entry : structure.entrySet()){
+            System.out.println("Key = " + entry.getKey().getId());
+            for(Edge edge : entry.getValue()){
+                System.out.println(edge.getFirstVertexId() + ":" + edge.getSecondVertexId()+":"+edge.getCost());
+            }
+        }
+
+    FileWriter fw = null;
         try {
             fw = new FileWriter(filename+"_"+numOfDrivers+"_"+dispatchListLength+".txt");
             fw.flush();
@@ -68,7 +83,8 @@ public class VRPSDRunner extends AbstractAlgorithmRunner {
         }
         DemandFactory demandFactory = new DemandFactory();
         //ArrayList<Double> customerDemands = demandFactory.createCustomersDemands(graph.getVertexNum(), alpha, gamma, capacity);
-        ArrayList<Double> customerDemands = demandFactory.readCustomersDemandsFromFile(folderName2+filename);
+        //ArrayList<Double> customerDemands = demandFactory.readCustomersDemandsFromFile(folderName2+filename);
+        ArrayList<Double> customerDemands = new ArrayList<Double>(){{add(0.0); add(3.0); add(3.0); add(3.0); add(3.0);}};
 
         problem = new VRPSD(graph, customerDemands, dispatchListLength, numOfDrivers, capacity, fw);
 
