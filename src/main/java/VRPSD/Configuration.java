@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Configuration {
 
@@ -21,6 +23,8 @@ public class Configuration {
     private int capacity;
     private List<Vertex> vertexesList = new ArrayList<>();
     private ArrayList<Double> customerDemands = new ArrayList<>();
+    private int bestValue;
+    private int minNumOfTrucks;
 
     public Configuration(String configurationFilename) {
         this.configurationFilename = configurationFilename;
@@ -71,6 +75,20 @@ public class Configuration {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        if(comment != null && comment.contains("Min no of trucks") &&
+                (comment.contains("Optimal value") || comment.contains("Best value"))){
+
+            Pattern p = Pattern.compile("\\d+");
+            Matcher m = p.matcher(comment);
+            ArrayList<Integer> values = new ArrayList<>();
+            while(m.find()) {
+                values.add(Integer.parseInt(m.group()));
+            }
+            this.minNumOfTrucks = values.get(0);
+            this.bestValue = values.get(1);
+        }
+
     }
 
     public String getName() {
@@ -103,5 +121,13 @@ public class Configuration {
 
     public ArrayList<Double> getCustomerDemands() {
         return customerDemands;
+    }
+
+    public int getBestValue() {
+        return bestValue;
+    }
+
+    public int getMinNumOfTrucks() {
+        return minNumOfTrucks;
     }
 }
