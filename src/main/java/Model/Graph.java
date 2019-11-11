@@ -60,6 +60,14 @@ public class Graph {
         }
     }
 
+    public void setFullGraphStructureWithVertexList(List<Vertex> vertexesList){
+        try{
+            setStructure(getDistances(vertexesList));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
     public List<Vertex> getVertexesList(String fileName) {
         File file = new File(fileName);
         List<Vertex> vertexList = new ArrayList<>();
