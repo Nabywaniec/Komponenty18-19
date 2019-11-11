@@ -50,9 +50,9 @@ public class VRPSDRunner extends AbstractAlgorithmRunner {
             gamma = Double.parseDouble(args[4]);
 
         } else {
-            filename = "eil22.sd";
-            dispatchListLength = 4;
-            numOfDrivers = 5;
+            filename = "eil30.sd";
+            dispatchListLength = 3;
+            numOfDrivers = 3;
             alpha = 0.1;
             gamma = 0.3;
         }
@@ -78,6 +78,9 @@ public class VRPSDRunner extends AbstractAlgorithmRunner {
         //ArrayList<Double> customerDemands = demandFactory.readCustomersDemandsFromFile(fullDataFolderName+filename);
         //ArrayList<Double> customerDemands = new ArrayList<Double>(){{add(0.0); add(3.0); add(3.0); add(3.0); add(3.0);}};
         ArrayList<Double> customerDemands = conf.getCustomerDemands();
+
+        VRPSDEvaluator evaluator = new VRPSDEvaluator();
+        System.out.println(evaluator.evaluateSimple(numOfDrivers, capacity, graph, customerDemands));
 
         problem = new VRPSD(graph, customerDemands, dispatchListLength, numOfDrivers, capacity, fw);
 
