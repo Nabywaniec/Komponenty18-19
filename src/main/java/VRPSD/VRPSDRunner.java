@@ -52,7 +52,7 @@ public class VRPSDRunner extends AbstractAlgorithmRunner {
         } else {
             filename = "eil22.sd";
             dispatchListLength = 3;
-            numOfDrivers = 3;
+            numOfDrivers = 4;
             alpha = 0.1;
             gamma = 0.3;
         }
@@ -60,6 +60,8 @@ public class VRPSDRunner extends AbstractAlgorithmRunner {
         Configuration conf = new Configuration(fullDataFolderName + filename);
 
         capacity = conf.getCapacity();
+
+        numOfDrivers = conf.getMinNumOfTrucks();
 
         Graph graph = new Graph();
 //        graph.setFullGraphStructure(onlyGraphFolderName+filename);
