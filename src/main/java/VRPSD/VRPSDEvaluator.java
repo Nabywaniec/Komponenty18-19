@@ -59,6 +59,12 @@ public class VRPSDEvaluator {
                         currentVehiclesLoad.set(carId, 0.0);
                     }
                     result += addEdgeCost(currentPositionId, nextPositionId, graphStructure);
+
+                    for (int i = 0; i < customersCurrentDemand.size(); i++) {
+                        if (customersCurrentDemand.get(i) == 0.0) {
+                            dispatchLists = removeFromDispatchLists(dispatchLists, i, graph, vrpsdSolution);
+                        }
+                    }
                 }
             }
         }
@@ -67,6 +73,25 @@ public class VRPSDEvaluator {
         }
         return (step < 500) ? result : max_eval;
 
+    }
+
+    private ArrayList<ArrayList<Integer>> removeFromDispatchLists(ArrayList<ArrayList<Integer>> dispatchLists, int customerNumber, Graph graph,
+                                                                  IntegerSolution vrpsdSolution) {
+        int index_number = 0;
+        for (ArrayList<Integer> dispatchList : dispatchLists) {
+            int old_size = dispatchList.size();
+            boolean b = dispatchList.remove(new Integer(customerNumber));
+            int actual_size = dispatchList.size();
+            Random random = new Random();
+            for (int i = 0; i < old_size - actual_size; i++) {
+                Integer rand = random.nextInt(graph.getVertexNum());
+                dispatchList.add(rand);
+                //vrpsdSolution.setVariableValue(index_number+dispatchList.size()-1,rand);
+
+            }
+            index_number += dispatchList.size();
+        }
+        return dispatchLists;
     }
 
     private boolean allCustomersSupplied(List<Double> customersCurrentDemand) {
@@ -136,8 +161,8 @@ public class VRPSDEvaluator {
     private int findClosestDemandingCustomer(int currentPositionId, Map<Vertex, List<Edge>> graphStructure, ArrayList<Double> customersCurrentDemand) {
         int customerId = 0;
         ArrayList<Integer> customersFitness = new ArrayList<>();
-        for(Double customerDemand : customersCurrentDemand){
-            if(customerDemand != 0 && customerId != currentPositionId){
+        for (Double customerDemand : customersCurrentDemand) {
+            if (customerDemand != 0 && customerId != currentPositionId) {
                 customersFitness.add(addEdgeCost(currentPositionId, customerId, graphStructure));
             } else {
                 customersFitness.add(Integer.MAX_VALUE);

@@ -85,7 +85,7 @@ public class VRPSDMutator implements MutationOperator<IntegerSolution> {
                     Double delta1 = (y - yl) / (yu - yl);
                     Double delta2 = (yu - y) / (yu - yl);
                     Double rnd = (Double)this.randomGenerator.getRandomValue();
-                    Double mutPow = 2.0D / (this.distributionIndex + 2.0D);
+                    Double mutPow = 3.0D / (this.distributionIndex + 3.0D);
                     Double deltaq;
                     double val;
                     double xy;
