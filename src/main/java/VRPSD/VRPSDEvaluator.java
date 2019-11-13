@@ -62,7 +62,7 @@ public class VRPSDEvaluator {
 
                     for (int i = 0; i < customersCurrentDemand.size(); i++) {
                         if (customersCurrentDemand.get(i) == 0.0) {
-                            dispatchLists = removeFromDispatchLists(dispatchLists, i, graph, vrpsdSolution);
+                            dispatchLists = removeFromDispatchLists(dispatchLists, i, graph);
                         }
                     }
                 }
@@ -75,8 +75,7 @@ public class VRPSDEvaluator {
 
     }
 
-    private ArrayList<ArrayList<Integer>> removeFromDispatchLists(ArrayList<ArrayList<Integer>> dispatchLists, int customerNumber, Graph graph,
-                                                                  IntegerSolution vrpsdSolution) {
+    private ArrayList<ArrayList<Integer>> removeFromDispatchLists(ArrayList<ArrayList<Integer>> dispatchLists, int customerNumber, Graph graph) {
         int index_number = 0;
         for (ArrayList<Integer> dispatchList : dispatchLists) {
             int old_size = dispatchList.size();
@@ -86,8 +85,6 @@ public class VRPSDEvaluator {
             for (int i = 0; i < old_size - actual_size; i++) {
                 Integer rand = random.nextInt(graph.getVertexNum());
                 dispatchList.add(rand);
-                //vrpsdSolution.setVariableValue(index_number+dispatchList.size()-1,rand);
-
             }
             index_number += dispatchList.size();
         }
