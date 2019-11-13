@@ -71,12 +71,12 @@ public class VRPSDEvaluator {
         for (int carId = 0; carId < numOfVehicles; carId++) {
             result += addEdgeCost(currentVehiclesPositions.get(carId), 0, graphStructure);
         }
+        saveSolution(vrpsdSolution, dispatchLists);
         return (step < 500) ? result : max_eval;
 
     }
 
     private ArrayList<ArrayList<Integer>> removeFromDispatchLists(ArrayList<ArrayList<Integer>> dispatchLists, int customerNumber, Graph graph) {
-        int index_number = 0;
         for (ArrayList<Integer> dispatchList : dispatchLists) {
             int old_size = dispatchList.size();
             boolean b = dispatchList.remove(new Integer(customerNumber));
@@ -86,7 +86,6 @@ public class VRPSDEvaluator {
                 Integer rand = random.nextInt(graph.getVertexNum());
                 dispatchList.add(rand);
             }
-            index_number += dispatchList.size();
         }
         return dispatchLists;
     }
@@ -119,5 +118,15 @@ public class VRPSDEvaluator {
             }
         }
         return result;
+    }
+
+    private void saveSolution(IntegerSolution solution,ArrayList<ArrayList<Integer>> dispatchLists){
+        int index = 0;
+        for(ArrayList<Integer> dispatchList : dispatchLists){
+            for(Integer value : dispatchList){
+                solution.setVariableValue(index, value);
+                index +=1;
+            }
+        }
     }
 }

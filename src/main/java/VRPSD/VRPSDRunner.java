@@ -50,7 +50,7 @@ public class VRPSDRunner extends AbstractAlgorithmRunner {
             gamma = Double.parseDouble(args[4]);
 
         } else {
-            filename = "eil22.sd";
+            filename = "eil23.sd";
             dispatchListLength = 3;
             numOfDrivers = 3;
             alpha = 0.1;
