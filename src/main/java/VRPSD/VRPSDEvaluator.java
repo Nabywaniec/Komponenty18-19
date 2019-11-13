@@ -85,14 +85,16 @@ public class VRPSDEvaluator {
                 dispatchList.set(i, new Integer(-1));
             }
         }
-        boolean b = dispatchList.remove(new Integer(-1));
-        int actual_size =  dispatchLists.get(currentPositionId).size();
+        while(dispatchList.contains(-1)){
+            dispatchList.remove(new Integer(-1));
+        }
+        int actual_size =  dispatchList.size();
         Random random = new Random();
         for(int i=0;i<old_size-actual_size;i++){
             // tutaj będzie zmiana aby to był najbliższy sąsiad
-            dispatchLists.get(currentPositionId).add(random.nextInt(graph.getVertexNum()));
+            dispatchList.add(random.nextInt(graph.getVertexNum()));
         }
-
+        dispatchLists.set(customerNumber, dispatchList);
         return dispatchLists;
 
     }
