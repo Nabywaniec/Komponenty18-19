@@ -8,6 +8,7 @@ public class Graph {
     private Map<Vertex, List<Edge>> structure = new HashMap<>();
     private Map<Integer, List<Integer>> dispatchList = new HashMap<>();
     private int vertexNum = 0;
+    private Map<Integer, List<Integer>>nearestNeighbours = new HashMap<>();
 
     public Map<Vertex, List<Edge>> getStructure() {
         return structure;
@@ -113,6 +114,18 @@ public class Graph {
         this.structure = structure;
         this.vertexNum = structure.size();
     }
+
+//    public void setNearestNeighboursMap(){
+//        List<Vertex> vertexList = (List<Vertex>) structure.keySet();
+//        double[][] distances = getDistances(vertexList);
+//        for(int i=0;i<vertexNum;i++){
+//            for(int j=0;j<vertexNum;j++){
+//                if(i != j){
+//
+//                }
+//            }
+//        }
+//    }
 
 
     public static void main(String[] args) {

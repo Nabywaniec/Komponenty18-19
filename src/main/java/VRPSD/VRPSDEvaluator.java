@@ -62,7 +62,7 @@ public class VRPSDEvaluator {
 
                     for (int i = 0; i < customersCurrentDemand.size(); i++) {
                         if (customersCurrentDemand.get(i) == 0.0) {
-                            dispatchLists = removeFromDispatchLists(dispatchLists, i, graph);
+                            dispatchLists = removeFromDispatchLists(dispatchLists, i, graph, currentPositionId, dispatchListsPointers);
                         }
                     }
                 }
@@ -76,18 +76,25 @@ public class VRPSDEvaluator {
 
     }
 
-    private ArrayList<ArrayList<Integer>> removeFromDispatchLists(ArrayList<ArrayList<Integer>> dispatchLists, int customerNumber, Graph graph) {
-        for (ArrayList<Integer> dispatchList : dispatchLists) {
-            int old_size = dispatchList.size();
-            boolean b = dispatchList.remove(new Integer(customerNumber));
-            int actual_size = dispatchList.size();
-            Random random = new Random();
-            for (int i = 0; i < old_size - actual_size; i++) {
-                Integer rand = random.nextInt(graph.getVertexNum());
-                dispatchList.add(rand);
+    private ArrayList<ArrayList<Integer>> removeFromDispatchLists(ArrayList<ArrayList<Integer>> dispatchLists, int customerNumber, Graph graph,
+                                                                  Integer currentPositionId, ArrayList<Integer> dispatchListsPointers) {
+        ArrayList<Integer> dispatchList = dispatchLists.get(currentPositionId);
+        int old_size = dispatchList.size();
+        for(int i=0;i<dispatchList.size(); i++){
+            if(dispatchList.get(i).equals(customerNumber) && dispatchListsPointers.get(currentPositionId)  < i){
+                dispatchList.set(i, new Integer(-1));
             }
         }
+        boolean b = dispatchList.remove(new Integer(-1));
+        int actual_size =  dispatchLists.get(currentPositionId).size();
+        Random random = new Random();
+        for(int i=0;i<old_size-actual_size;i++){
+            // tutaj będzie zmiana aby to był najbliższy sąsiad
+            dispatchLists.get(currentPositionId).add(random.nextInt(graph.getVertexNum()));
+        }
+
         return dispatchLists;
+
     }
 
     private boolean allCustomersSupplied(List<Double> customersCurrentDemand) {
