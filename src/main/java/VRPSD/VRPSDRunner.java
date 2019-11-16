@@ -67,6 +67,7 @@ public class VRPSDRunner extends AbstractAlgorithmRunner {
 //        graph.setFullGraphStructure(onlyGraphFolderName+filename);
 //        graph.setStructure("src/main/resources/VRPSD/VRPSDtest.txt");
         graph.setFullGraphStructureWithVertexList(conf.getVertexesList());
+        graph.setNearestNeighboursMap();
 
         FileWriter fw = null;
         try {
