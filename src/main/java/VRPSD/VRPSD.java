@@ -62,7 +62,7 @@ public class VRPSD extends AbstractIntegerProblem {
     public void evaluate(IntegerSolution integerSolution) {
         int fitness = 0;
 
-        VRPSDEvaluator evaluator = new VRPSDEvaluator();
+        VRPSDLuckyStarEvaluator evaluator = new VRPSDLuckyStarEvaluator();
         fitness = evaluator.evaluate(this, integerSolution, graph, customerDemands);
 
         try {
