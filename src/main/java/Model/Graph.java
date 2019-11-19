@@ -115,17 +115,30 @@ public class Graph {
         this.vertexNum = structure.size();
     }
 
-//    public void setNearestNeighboursMap(){
-//        List<Vertex> vertexList = (List<Vertex>) structure.keySet();
-//        double[][] distances = getDistances(vertexList);
-//        for(int i=0;i<vertexNum;i++){
-//            for(int j=0;j<vertexNum;j++){
-//                if(i != j){
-//
-//                }
-//            }
-//        }
-//    }
+    public void setNearestNeighboursMap(){
+        List<Vertex> vertexList = new ArrayList<>();
+        vertexList.addAll(structure.keySet());
+        double[][] distances = getDistances(vertexList);
+        for(int i=0;i<vertexNum;i++){
+            ArrayList<Double> distancesForSingleVertex = new ArrayList<>();
+            for(int j=0;j<vertexNum;j++){
+                if(i != j){
+                    distancesForSingleVertex.add(distances[i][j]);
+                }
+            }
+            ArrayList<Double> distancesForSingleVertexSorted = new ArrayList<>(distancesForSingleVertex);
+            Collections.sort(distancesForSingleVertex);
+            List<Integer> nearestVertexesIndexes = new ArrayList<>();
+            for(int k=0;k<4;k++){
+                nearestVertexesIndexes.add(distancesForSingleVertex.indexOf(distancesForSingleVertexSorted.get(k)));
+            }
+            nearestNeighbours.put(i, nearestVertexesIndexes);
+        }
+    }
+
+    public Map<Integer, List<Integer>> getNearestNeighbours(){
+        return nearestNeighbours;
+    }
 
 
     public static void main(String[] args) {
