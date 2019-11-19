@@ -39,7 +39,7 @@ public class VRPSDEvaluator {
         ArrayList<Integer> dispatchListsPointers = new ArrayList<>(Collections.nCopies(vertexNum, 0));
         Map<Vertex, List<Edge>> graphStructure = graph.getStructure();
         ArrayList<Double> customersCurrentDemand = new ArrayList<>(customersDemand);
-
+        ArrayList<Boolean> isDispatchListLooped = new ArrayList<>(Collections.nCopies(vertexNum, false));
         int step = -1;
         int result = 0;
         while (!allCustomersSupplied(customersCurrentDemand) && step < max_steps) {
@@ -48,7 +48,6 @@ public class VRPSDEvaluator {
                 if (currentVehiclesLoad.get(carId) > 0.0) {
                     int currentPositionId = currentVehiclesPositions.get(carId);
                     int nextPositionId = dispatchLists.get(currentPositionId).get(dispatchListsPointers.get(currentPositionId));
-                    dispatchListsPointers.set(currentPositionId, (dispatchListsPointers.get(currentPositionId) + 1) % dispatchListLength);
                     currentVehiclesPositions.set(carId, nextPositionId);
 
                     if (customersCurrentDemand.get(nextPositionId) < currentVehiclesLoad.get(carId)) {
@@ -60,12 +59,17 @@ public class VRPSDEvaluator {
                     }
                     result += addEdgeCost(currentPositionId, nextPositionId, graphStructure);
 
+                    if(dispatchListsPointers.get(currentPositionId).equals(dispatchListLength-1)){
+                        isDispatchListLooped.set(currentPositionId, true);
+                    }
+
                     for (int i = 0; i < customersCurrentDemand.size(); i++) {
                         if (customersCurrentDemand.get(i) == 0.0) {
                             dispatchLists = removeFromDispatchLists(dispatchLists, i, graph, currentPositionId, dispatchListsPointers,
-                                    customersCurrentDemand);
+                                    customersCurrentDemand, isDispatchListLooped);
                         }
                     }
+                    dispatchListsPointers.set(currentPositionId, (dispatchListsPointers.get(currentPositionId) + 1) % dispatchListLength);
                 }
             }
         }
@@ -79,11 +83,13 @@ public class VRPSDEvaluator {
 
     private ArrayList<ArrayList<Integer>> removeFromDispatchLists(ArrayList<ArrayList<Integer>> dispatchLists, int customerNumber, Graph graph,
                                                                   Integer currentPositionId, ArrayList<Integer> dispatchListsPointers,
-                                                                  ArrayList<Double> customersCurrentDemand) {
+                                                                  ArrayList<Double> customersCurrentDemand,
+                                                                  ArrayList<Boolean> isDispatchListLooped) {
         ArrayList<Integer> dispatchList = dispatchLists.get(currentPositionId);
         int old_size = dispatchList.size();
         for(int i=0;i<dispatchList.size(); i++){
-            if(dispatchList.get(i).equals(customerNumber) && dispatchListsPointers.get(currentPositionId)  < i){
+            if(dispatchList.get(i).equals(customerNumber) && dispatchListsPointers.get(currentPositionId)  < i && isDispatchListLooped.get(currentPositionId) == false)
+            {
                 dispatchList.set(i, new Integer(-1));
             }
         }

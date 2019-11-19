@@ -2,8 +2,8 @@
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 <record>
-  <date>2019-11-16T17:00:45</date>
-  <millis>1573920045764</millis>
+  <date>2019-11-19T09:17:24</date>
+  <millis>1574151444336</millis>
   <sequence>0</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
@@ -13,30 +13,30 @@
   <message>Loggers configured with null</message>
 </record>
 <record>
-  <date>2019-11-16T17:00:46</date>
-  <millis>1573920046043</millis>
+  <date>2019-11-19T09:17:24</date>
+  <millis>1574151444492</millis>
   <sequence>1</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>VRPSD.VRPSDRunner</class>
   <method>main</method>
   <thread>1</thread>
-  <message>Total execution time: 92323ms</message>
+  <message>Total execution time: 60701ms</message>
 </record>
 <record>
-  <date>2019-11-16T17:00:46</date>
-  <millis>1573920046119</millis>
+  <date>2019-11-19T09:17:24</date>
+  <millis>1574151444549</millis>
   <sequence>2</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.AbstractAlgorithmRunner</class>
   <method>printFinalSolutionSet</method>
   <thread>1</thread>
-  <message>Random seed: 1573919953345</message>
+  <message>Random seed: 1574151383602</message>
 </record>
 <record>
-  <date>2019-11-16T17:00:46</date>
-  <millis>1573920046122</millis>
+  <date>2019-11-19T09:17:24</date>
+  <millis>1574151444551</millis>
   <sequence>3</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
@@ -46,8 +46,8 @@
   <message>Objectives values have been written to file FUN.tsv</message>
 </record>
 <record>
-  <date>2019-11-16T17:00:46</date>
-  <millis>1573920046125</millis>
+  <date>2019-11-19T09:17:24</date>
+  <millis>1574151444553</millis>
   <sequence>4</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>

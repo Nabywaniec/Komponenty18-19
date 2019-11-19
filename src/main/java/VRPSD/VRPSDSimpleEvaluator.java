@@ -149,4 +149,53 @@ public class VRPSDSimpleEvaluator {
         }
         return customersFitness.indexOf(Collections.min(customersFitness));
     }
+
+    public int simpleEvaluateStringDispatchList(String dispatchListRawString, Graph graph, ArrayList<Double> customersDemand,
+                                                int numOfVehicles, double vehicleCapacity, int dispatchListLength) {
+        String[] dispatchListRawStringSplit = dispatchListRawString.split(" ");
+        ArrayList<Integer> dispatchListRaw = new ArrayList<>();
+        for (String num: dispatchListRawStringSplit) {
+            dispatchListRaw.add(Integer.parseInt(num));
+        }
+
+        int vertexNum = graph.getVertexNum();
+
+        ArrayList<Integer> currentVehiclesPositions = new ArrayList<>(Collections.nCopies(numOfVehicles, 0));
+        ArrayList<Double> currentVehiclesLoad = new ArrayList<>(Collections.nCopies(numOfVehicles, vehicleCapacity));
+        ArrayList<ArrayList<Integer>> dispatchLists =
+                extractDispatchListsFromSolution(dispatchListRaw, dispatchListLength, vertexNum);
+        ArrayList<Integer> dispatchListsPointers = new ArrayList<>(Collections.nCopies(vertexNum, 0));
+        Map<Vertex, List<Edge>> graphStructure = graph.getStructure();
+        ArrayList<Double> customersCurrentDemand = new ArrayList<>(customersDemand);
+
+        int step = -1;
+        int result = 0;
+        while (!allCustomersSupplied(customersCurrentDemand) && step < max_steps) {
+            step += 1;
+            for (int carId = 0; carId < numOfVehicles; carId++) {
+                if(allCustomersSupplied(customersCurrentDemand))
+                    break;
+                if (currentVehiclesLoad.get(carId) > 0.0) {
+                    int currentPositionId = currentVehiclesPositions.get(carId);
+                    int nextPositionId = dispatchLists.get(currentPositionId).get(dispatchListsPointers.get(currentPositionId));
+                    dispatchListsPointers.set(currentPositionId, (dispatchListsPointers.get(currentPositionId) + 1) % dispatchListLength);
+                    currentVehiclesPositions.set(carId, nextPositionId);
+
+                    if (customersCurrentDemand.get(nextPositionId) < currentVehiclesLoad.get(carId)) {
+                        currentVehiclesLoad.set(carId, currentVehiclesLoad.get(carId) - customersCurrentDemand.get(nextPositionId));
+                        customersCurrentDemand.set(nextPositionId, 0.0);
+                    } else {
+                        customersCurrentDemand.set(nextPositionId, customersCurrentDemand.get(nextPositionId) - currentVehiclesLoad.get(carId));
+                        currentVehiclesLoad.set(carId, 0.0);
+                    }
+                    result += addEdgeCost(currentPositionId, nextPositionId, graphStructure);
+                }
+            }
+        }
+        for (int carId = 0; carId < numOfVehicles; carId++) {
+            result += addEdgeCost(currentVehiclesPositions.get(carId), 0, graphStructure);
+        }
+        return (step < 500) ? result : max_eval;
+
+    }
 }

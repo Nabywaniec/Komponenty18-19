@@ -85,6 +85,9 @@ public class VRPSDRunner extends AbstractAlgorithmRunner {
         VRPSDSimpleEvaluator evaluatorSimple = new VRPSDSimpleEvaluator();
         System.out.println(evaluatorSimple.evaluateSimple(numOfDrivers, capacity, graph, customerDemands));
 
+        String list = "21 14 12 6 10 10 9 16 20 3 4 20 8 10 11 7 20 20 10 0 0 2 16 20 11 10 10 1 20 11 2 12 9 4 10 20 7 20 11 3 16 9 13 18 19 17 11 11 20 17 11 3 2 20 15 17 17 18 20 10 12 21 21 21 5 19";
+        int result = evaluatorSimple.simpleEvaluateStringDispatchList(list, graph, customerDemands, numOfDrivers, capacity, dispatchListLength);
+        System.out.println(result);
         problem = new VRPSD(graph, customerDemands, dispatchListLength, numOfDrivers, capacity, fw);
 
         double crossoverProbability = 0.9 ;
