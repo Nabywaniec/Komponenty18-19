@@ -1,7 +1,6 @@
 package TSP;
 
 import Model.Graph;
-import Operators.Evaluator;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -43,7 +42,7 @@ public class ClassicmTSP extends AbstractmTSPPermutationProblem {
 
         List<Integer> startPositions = new ArrayList<Integer>(Collections.nCopies(numOfDrivers, 0));
         ClassicmTSPEvaluator evaluator = new ClassicmTSPEvaluator();
-        fitness = evaluator.evaluate(graph, startPositions, numOfDrivers, integermTSPPermutationSolution.getVariables());
+        fitness = evaluator.evaluate(graph, numOfDrivers, integermTSPPermutationSolution.getVariables());
 
         try {
             fw.write(String.valueOf(System.nanoTime() - startTime) + " " + String.valueOf(fitness) + "\n");
