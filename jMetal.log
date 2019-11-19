@@ -2,8 +2,8 @@
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 <record>
-  <date>2019-06-01T12:52:20</date>
-  <millis>1559386340697</millis>
+  <date>2019-11-13T20:26:27</date>
+  <millis>1573673187836</millis>
   <sequence>0</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
@@ -13,35 +13,46 @@
   <message>Loggers configured with null</message>
 </record>
 <record>
-  <date>2019-06-01T12:52:20</date>
-  <millis>1559386340742</millis>
+  <date>2019-11-13T20:26:28</date>
+  <millis>1573673188005</millis>
   <sequence>1</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
-  <class>TSP.ClassicmTSPRunner</class>
+  <class>VRPSD.VRPSDRunner</class>
   <method>main</method>
   <thread>1</thread>
-  <message>Total execution time: 6035ms</message>
+  <message>Total execution time: 5683ms</message>
 </record>
 <record>
-  <date>2019-06-01T12:52:20</date>
-  <millis>1559386340743</millis>
+  <date>2019-11-13T20:26:28</date>
+  <millis>1573673188105</millis>
   <sequence>2</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
-  <class>TSP.ClassicmTSPRunner</class>
-  <method>main</method>
+  <class>org.uma.jmetal.util.AbstractAlgorithmRunner</class>
+  <method>printFinalSolutionSet</method>
+  <thread>1</thread>
+  <message>Random seed: 1573673182115</message>
+</record>
+<record>
+  <date>2019-11-13T20:26:28</date>
+  <millis>1573673188107</millis>
+  <sequence>3</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>org.uma.jmetal.util.AbstractAlgorithmRunner</class>
+  <method>printFinalSolutionSet</method>
   <thread>1</thread>
   <message>Objectives values have been written to file FUN.tsv</message>
 </record>
 <record>
-  <date>2019-06-01T12:52:20</date>
-  <millis>1559386340743</millis>
-  <sequence>3</sequence>
+  <date>2019-11-13T20:26:28</date>
+  <millis>1573673188109</millis>
+  <sequence>4</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
-  <class>TSP.ClassicmTSPRunner</class>
-  <method>main</method>
+  <class>org.uma.jmetal.util.AbstractAlgorithmRunner</class>
+  <method>printFinalSolutionSet</method>
   <thread>1</thread>
   <message>Variables values have been written to file VAR.tsv</message>
 </record>

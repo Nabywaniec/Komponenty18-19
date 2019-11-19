@@ -8,6 +8,7 @@ public class Graph {
     private Map<Vertex, List<Edge>> structure = new HashMap<>();
     private Map<Integer, List<Integer>> dispatchList = new HashMap<>();
     private int vertexNum = 0;
+    private Map<Integer, List<Integer>>nearestNeighbours = new HashMap<>();
 
     public Map<Vertex, List<Edge>> getStructure() {
         return structure;
@@ -41,17 +42,27 @@ public class Graph {
                 int i = 0;
                 for (String neighbour : neighbours) {
                     neighboursList.add(new Edge(Integer.parseInt(edgeCosts[i]), vertexId, Integer.parseInt(neighbour)));
+                    i++;
                 }
                 structure.put(vertex, neighboursList);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+        this.vertexNum = structure.size();
     }
 
     public void setFullGraphStructure(String fileName){
         try{
             List<Vertex> vertexesList = getVertexesList(fileName);
+            setStructure(getDistances(vertexesList));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void setFullGraphStructureWithVertexList(List<Vertex> vertexesList){
+        try{
             setStructure(getDistances(vertexesList));
         }catch (Exception e){
             e.printStackTrace();
@@ -64,7 +75,7 @@ public class Graph {
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = br.readLine()) != null) {
-                List<String> splitted = Arrays.asList(line.split("\t"));
+                List<String> splitted = Arrays.asList(line.split("\t| "));
                 int vertexId = Integer.parseInt(splitted.get(0))-1;
                 int x = Integer.parseInt(splitted.get(1));
                 int y = Integer.parseInt(splitted.get(2));
@@ -103,6 +114,18 @@ public class Graph {
         this.structure = structure;
         this.vertexNum = structure.size();
     }
+
+//    public void setNearestNeighboursMap(){
+//        List<Vertex> vertexList = (List<Vertex>) structure.keySet();
+//        double[][] distances = getDistances(vertexList);
+//        for(int i=0;i<vertexNum;i++){
+//            for(int j=0;j<vertexNum;j++){
+//                if(i != j){
+//
+//                }
+//            }
+//        }
+//    }
 
 
     public static void main(String[] args) {

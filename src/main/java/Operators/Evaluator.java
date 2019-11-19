@@ -104,4 +104,11 @@ public class Evaluator {
         }
         return true;
     }
+
+    private boolean allCommoditySupplied(List<Integer >commodityOrder){
+        for(Integer order : commodityOrder){
+            if(order!=0) return false;
+        }
+        return true;
+    }
 }
