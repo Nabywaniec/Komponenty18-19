@@ -1,10 +1,6 @@
 package VRPSD;
 
-import Model.Edge;
 import Model.Graph;
-import Model.Vertex;
-import Operators.Evaluator;
-import mTSP.mTSP;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.operator.CrossoverOperator;
