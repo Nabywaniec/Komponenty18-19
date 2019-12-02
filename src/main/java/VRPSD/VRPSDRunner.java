@@ -77,8 +77,8 @@ public class VRPSDRunner extends AbstractAlgorithmRunner {
         //ArrayList<Double> customerDemands = new ArrayList<Double>(){{add(0.0); add(3.0); add(3.0); add(3.0); add(3.0);}};
         ArrayList<Double> customerDemands = conf.getCustomerDemands();
 
-        VRPSDSimpleEvaluator evaluatorSimple = new VRPSDSimpleEvaluator();
-        System.out.println(evaluatorSimple.evaluateSimple(numOfDrivers, capacity, graph, customerDemands));
+//        VRPSDSimpleEvaluator evaluatorSimple = new VRPSDSimpleEvaluator();
+//        System.out.println(evaluatorSimple.evaluateSimple(numOfDrivers, capacity, graph, customerDemands));
 
         problem = new VRPSD(graph, customerDemands, dispatchListLength, numOfDrivers, capacity, fw);
 
