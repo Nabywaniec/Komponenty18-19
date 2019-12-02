@@ -34,34 +34,33 @@ public class VRPSDRunner extends AbstractAlgorithmRunner {
         String filename = "";
         int dispatchListLength = 0;
         int numOfDrivers = 0;
+        double capacity = 0;
         double alpha = 0;
         double gamma = 0;
-        double capacity = 0;
         String referenceParetoFront = "";
+        Configuration conf = null;
         if (args.length == 6) {
             filename = args[0];
+            conf = new Configuration(fullDataFolderName + filename);
             dispatchListLength = Integer.parseInt(args[1]);
             numOfDrivers = Integer.parseInt(args[2]);
-            alpha = Double.parseDouble(args[3]);
-            gamma = Double.parseDouble(args[4]);
+            capacity = Double.parseDouble(args[3]);
+            alpha = Double.parseDouble(args[4]);
+            gamma = Double.parseDouble(args[5]);
 
         } else {
             filename = "eil22.sd";
+            conf = new Configuration(fullDataFolderName + filename);
             dispatchListLength = 3;
-            numOfDrivers = 3;
+            numOfDrivers = conf.getMinNumOfTrucks();
+            capacity = conf.getCapacity();
             alpha = 0.1;
             gamma = 0.3;
         }
 
-        Configuration conf = new Configuration(fullDataFolderName + filename);
-
-        capacity = conf.getCapacity();
-
-        numOfDrivers = conf.getMinNumOfTrucks();
-
         Graph graph = new Graph();
-//        graph.setFullGraphStructure(onlyGraphFolderName+filename);
-//        graph.setStructure("src/main/resources/VRPSD/VRPSDtest.txt");
+        //graph.setFullGraphStructure(onlyGraphFolderName+filename);
+        //graph.setStructure("src/main/resources/VRPSD/VRPSDtest.txt");
         graph.setFullGraphStructureWithVertexList(conf.getVertexesList());
         graph.setNearestNeighboursMap();
 
@@ -91,10 +90,10 @@ public class VRPSDRunner extends AbstractAlgorithmRunner {
         double mutationDistributionIndex = 20.0 ;
         mutation = new VRPSDMutator(mutationProbability, mutationDistributionIndex);
 
-        selection = new BinaryTournamentSelection<IntegerSolution>() ;
+        selection = new BinaryTournamentSelection<>() ;
 
         int populationSize = 100;
-        algorithm = new NSGAIIBuilder<IntegerSolution>(problem, crossover, mutation, populationSize)
+        algorithm = new NSGAIIBuilder<>(problem, crossover, mutation, populationSize)
                 .setSelectionOperator(selection)
                 .setMaxEvaluations(25000)
                 .build() ;
