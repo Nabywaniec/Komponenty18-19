@@ -75,7 +75,7 @@ public class VRPSDSimpleEvaluator {
             for (int carId = 0; carId < numOfVehicles; carId++) {
                 if (currentVehiclesLoad.get(carId) > 0.0) {
                     int currentPositionId = currentVehiclesPositions.get(carId);
-                    int nextPositionId = findClosestDemandingCustomer(currentPositionId, graphStructure, customersCurrentDemand);
+                    int nextPositionId = evaluatorUtils.findClosestDemandingCustomer(currentPositionId, graphStructure, customersCurrentDemand);
                     currentVehiclesPositions.set(carId, nextPositionId);
 
                     if (customersCurrentDemand.get(nextPositionId) < currentVehiclesLoad.get(carId)) {
@@ -94,20 +94,6 @@ public class VRPSDSimpleEvaluator {
         }
         return (step < 500) ? result : max_eval;
 
-    }
-
-    private int findClosestDemandingCustomer(int currentPositionId, Map<Vertex, List<Edge>> graphStructure, ArrayList<Double> customersCurrentDemand) {
-        int customerId = 0;
-        ArrayList<Integer> customersFitness = new ArrayList<>();
-        for(Double customerDemand : customersCurrentDemand){
-            if(customerDemand != 0 && customerId != currentPositionId){
-                customersFitness.add(evaluatorUtils.addEdgeCost(currentPositionId, customerId, graphStructure));
-            } else {
-                customersFitness.add(Integer.MAX_VALUE);
-            }
-            customerId++;
-        }
-        return customersFitness.indexOf(Collections.min(customersFitness));
     }
 
     public int simpleEvaluateStringDispatchList(String dispatchListRawString, Graph graph, ArrayList<Double> customersDemand,

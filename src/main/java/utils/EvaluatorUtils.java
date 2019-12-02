@@ -63,4 +63,18 @@ public class EvaluatorUtils {
             }
         }
     }
+
+    public int findClosestDemandingCustomer(int currentPositionId, Map<Vertex, List<Edge>> graphStructure, ArrayList<Double> customersCurrentDemand) {
+        int customerId = 0;
+        ArrayList<Integer> customersFitness = new ArrayList<>();
+        for(Double customerDemand : customersCurrentDemand){
+            if(customerDemand == 0 || customerId == currentPositionId || customerId == 0){
+                customersFitness.add(Integer.MAX_VALUE);
+            } else {
+                customersFitness.add(addEdgeCost(currentPositionId, customerId, graphStructure));
+            }
+            customerId++;
+        }
+        return customersFitness.indexOf(Collections.min(customersFitness));
+    }
 }

@@ -51,7 +51,7 @@ public class VRPSDLuckyStarEvaluator {
                                 isNextPositionProper = true;
                             } else { //klient ni mo zapotrzebowania i slot nie był używany
                                 dispatchLists.get(currentPositionId).remove((int)dispatchListsPointers.get(currentPositionId));
-                                dispatchLists.get(currentPositionId).add(findClosestDemandingCustomer(currentPositionId, graphStructure, customersCurrentDemand));
+                                dispatchLists.get(currentPositionId).add(evaluatorUtils.findClosestDemandingCustomer(currentPositionId, graphStructure, customersCurrentDemand));
 
                                 isDispatchListSlotUsed.get(currentPositionId).remove((int)dispatchListsPointers.get(currentPositionId));
                                 isDispatchListSlotUsed.get(currentPositionId).add(false);
@@ -81,20 +81,6 @@ public class VRPSDLuckyStarEvaluator {
         evaluatorUtils.saveSolution(vrpsdSolution, dispatchLists);
 
         return (step < 500) ? result : max_eval;
-    }
-
-    private int findClosestDemandingCustomer(int currentPositionId, Map<Vertex, List<Edge>> graphStructure, ArrayList<Double> customersCurrentDemand) {
-        int customerId = 0;
-        ArrayList<Integer> customersFitness = new ArrayList<>();
-        for(Double customerDemand : customersCurrentDemand){
-            if(customerDemand == 0 || customerId == currentPositionId || customerId == 0){
-                customersFitness.add(Integer.MAX_VALUE);
-            } else {
-                customersFitness.add(evaluatorUtils.addEdgeCost(currentPositionId, customerId, graphStructure));
-            }
-            customerId++;
-        }
-        return customersFitness.indexOf(Collections.min(customersFitness));
     }
 
     private ArrayList<ArrayList<Boolean>> setupIsDispatchListSlotUsedList(ArrayList<ArrayList<Integer>> dispatchLists, int dispatchListVertexLength) {
