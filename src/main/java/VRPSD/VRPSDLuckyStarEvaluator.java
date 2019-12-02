@@ -4,6 +4,7 @@ import Model.Edge;
 import Model.Graph;
 import Model.Vertex;
 import org.uma.jmetal.solution.IntegerSolution;
+import utils.EvaluatorUtils;
 
 import java.util.*;
 
@@ -11,7 +12,6 @@ public class VRPSDLuckyStarEvaluator {
 
     private int max_eval = 100000;
     private int max_steps = 500;
-    private Random rand = new Random();
 
     public int evaluate(VRPSD vrpsdProblem, IntegerSolution vrpsdSolution, Graph graph, ArrayList<Double> customersDemand) {
         int numOfVehicles = vrpsdProblem.getNumOfVehicles();
@@ -30,10 +30,10 @@ public class VRPSDLuckyStarEvaluator {
 
         int step = -1;
         int result = 0;
-        while (!allCustomersSupplied(customersCurrentDemand) && step < max_steps) {
+        while (!EvaluatorUtils.allCustomersSupplied(customersCurrentDemand) && step < max_steps) {
             step += 1;
             for (int carId = 0; carId < numOfVehicles; carId++) {
-                if(allCustomersSupplied(customersCurrentDemand))
+                if(EvaluatorUtils.allCustomersSupplied(customersCurrentDemand))
                     break;
                 if (currentVehiclesLoad.get(carId) > 0.0) {
                     int currentPositionId = currentVehiclesPositions.get(carId);
@@ -70,20 +70,14 @@ public class VRPSDLuckyStarEvaluator {
                         customersCurrentDemand.set(nextPositionId, customersCurrentDemand.get(nextPositionId) - currentVehiclesLoad.get(carId));
                         currentVehiclesLoad.set(carId, 0.0);
                     }
-                    result += addEdgeCost(currentPositionId, nextPositionId, graphStructure);
+                    result += EvaluatorUtils.addEdgeCost(currentPositionId, nextPositionId, graphStructure);
                 }
             }
         }
         for (int carId = 0; carId < numOfVehicles; carId++) {
-            result += addEdgeCost(currentVehiclesPositions.get(carId), 0, graphStructure);
+            result += EvaluatorUtils.addEdgeCost(currentVehiclesPositions.get(carId), 0, graphStructure);
         }
-        int i=0;
-        for(ArrayList dispatchList : dispatchLists){
-            for(Object slot : dispatchList){
-                vrpsdSolution.setVariableValue(i,(int)slot);
-                i++;
-            }
-        }
+        EvaluatorUtils.saveSolution(vrpsdSolution, dispatchLists);
 
         return (step < 500) ? result : max_eval;
     }
@@ -95,7 +89,7 @@ public class VRPSDLuckyStarEvaluator {
             if(customerDemand == 0 || customerId == currentPositionId || customerId == 0){
                 customersFitness.add(Integer.MAX_VALUE);
             } else {
-                customersFitness.add(addEdgeCost(currentPositionId, customerId, graphStructure));
+                customersFitness.add(EvaluatorUtils.addEdgeCost(currentPositionId, customerId, graphStructure));
             }
             customerId++;
         }
@@ -126,35 +120,5 @@ public class VRPSDLuckyStarEvaluator {
             dispatchLists.add(vertexId, dispatchList);
         }
         return dispatchLists;
-    }
-
-    private boolean allCustomersSupplied(List<Double> customersCurrentDemand) {
-        for (Double demand : customersCurrentDemand) {
-            if (demand > 0.0) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private int addEdgeCost(int currentPositionId, int nextPositionId, Map<Vertex, List<Edge>> graphStructure) {
-        Vertex currentVertex = null;
-        Vertex nextVertex = null;
-        int result = 0;
-        for (Vertex vertex : graphStructure.keySet()) {
-            if (vertex.getId() == currentPositionId) {
-                currentVertex = vertex;
-            }
-            if (vertex.getId() == nextPositionId) {
-                nextVertex = vertex;
-            }
-        }
-        List<Edge> egdes = graphStructure.get(currentVertex);
-        for (Edge edge : egdes) {
-            if (edge.getFirstVertexId() == currentVertex.getId() && edge.getSecondVertexId() == nextVertex.getId()) {
-                result += edge.getCost();
-            }
-        }
-        return result;
     }
 }
