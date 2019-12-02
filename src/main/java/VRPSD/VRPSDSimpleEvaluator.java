@@ -36,6 +36,8 @@ public class VRPSDSimpleEvaluator {
         while (!evaluatorUtils.allCustomersSupplied(customersCurrentDemand) && step < max_steps) {
             step += 1;
             for (int carId = 0; carId < numOfVehicles; carId++) {
+                if(evaluatorUtils.allCustomersSupplied(customersCurrentDemand))
+                    break;
                 if (currentVehiclesLoad.get(carId) > 0.0) {
                     int currentPositionId = currentVehiclesPositions.get(carId);
                     int nextPositionId = dispatchLists.get(currentPositionId).get(dispatchListsPointers.get(currentPositionId));
@@ -73,6 +75,8 @@ public class VRPSDSimpleEvaluator {
         while (!evaluatorUtils.allCustomersSupplied(customersCurrentDemand) && step < max_steps) {
             step += 1;
             for (int carId = 0; carId < numOfVehicles; carId++) {
+                if(evaluatorUtils.allCustomersSupplied(customersCurrentDemand))
+                    break;
                 if (currentVehiclesLoad.get(carId) > 0.0) {
                     int currentPositionId = currentVehiclesPositions.get(carId);
                     int nextPositionId = evaluatorUtils.findClosestDemandingCustomer(currentPositionId, graphStructure, customersCurrentDemand);
