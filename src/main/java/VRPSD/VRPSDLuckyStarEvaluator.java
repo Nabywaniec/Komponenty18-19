@@ -12,6 +12,7 @@ public class VRPSDLuckyStarEvaluator {
 
     private int max_eval = 100000;
     private int max_steps = 500;
+    private EvaluatorUtils evaluatorUtils = new EvaluatorUtils();
 
     public int evaluate(VRPSD vrpsdProblem, IntegerSolution vrpsdSolution, Graph graph, ArrayList<Double> customersDemand) {
         int numOfVehicles = vrpsdProblem.getNumOfVehicles();
@@ -22,7 +23,7 @@ public class VRPSDLuckyStarEvaluator {
         ArrayList<Integer> currentVehiclesPositions = new ArrayList<>(Collections.nCopies(numOfVehicles, 0));
         ArrayList<Double> currentVehiclesLoad = new ArrayList<>(Collections.nCopies(numOfVehicles, vehicleCapacity));
         ArrayList<ArrayList<Integer>> dispatchLists =
-                extractDispatchListsFromSolution(vrpsdSolution.getVariables(), dispatchListLength, vertexNum);
+                evaluatorUtils.extractDispatchListsFromSolution(vrpsdSolution.getVariables(), dispatchListLength, vertexNum);
         ArrayList<Integer> dispatchListsPointers = new ArrayList<>(Collections.nCopies(vertexNum, 0));
         Map<Vertex, List<Edge>> graphStructure = graph.getStructure();
         ArrayList<Double> customersCurrentDemand = new ArrayList<>(customersDemand);
@@ -30,10 +31,10 @@ public class VRPSDLuckyStarEvaluator {
 
         int step = -1;
         int result = 0;
-        while (!EvaluatorUtils.allCustomersSupplied(customersCurrentDemand) && step < max_steps) {
+        while (!evaluatorUtils.allCustomersSupplied(customersCurrentDemand) && step < max_steps) {
             step += 1;
             for (int carId = 0; carId < numOfVehicles; carId++) {
-                if(EvaluatorUtils.allCustomersSupplied(customersCurrentDemand))
+                if(evaluatorUtils.allCustomersSupplied(customersCurrentDemand))
                     break;
                 if (currentVehiclesLoad.get(carId) > 0.0) {
                     int currentPositionId = currentVehiclesPositions.get(carId);
@@ -70,14 +71,14 @@ public class VRPSDLuckyStarEvaluator {
                         customersCurrentDemand.set(nextPositionId, customersCurrentDemand.get(nextPositionId) - currentVehiclesLoad.get(carId));
                         currentVehiclesLoad.set(carId, 0.0);
                     }
-                    result += EvaluatorUtils.addEdgeCost(currentPositionId, nextPositionId, graphStructure);
+                    result += evaluatorUtils.addEdgeCost(currentPositionId, nextPositionId, graphStructure);
                 }
             }
         }
         for (int carId = 0; carId < numOfVehicles; carId++) {
-            result += EvaluatorUtils.addEdgeCost(currentVehiclesPositions.get(carId), 0, graphStructure);
+            result += evaluatorUtils.addEdgeCost(currentVehiclesPositions.get(carId), 0, graphStructure);
         }
-        EvaluatorUtils.saveSolution(vrpsdSolution, dispatchLists);
+        evaluatorUtils.saveSolution(vrpsdSolution, dispatchLists);
 
         return (step < 500) ? result : max_eval;
     }
@@ -89,7 +90,7 @@ public class VRPSDLuckyStarEvaluator {
             if(customerDemand == 0 || customerId == currentPositionId || customerId == 0){
                 customersFitness.add(Integer.MAX_VALUE);
             } else {
-                customersFitness.add(EvaluatorUtils.addEdgeCost(currentPositionId, customerId, graphStructure));
+                customersFitness.add(evaluatorUtils.addEdgeCost(currentPositionId, customerId, graphStructure));
             }
             customerId++;
         }
@@ -106,19 +107,5 @@ public class VRPSDLuckyStarEvaluator {
             isDispatchListSlotUsed.add(dispatchListNum, isDispatchListSlotUsedSingle);
         }
         return isDispatchListSlotUsed;
-    }
-
-    public ArrayList<ArrayList<Integer>> extractDispatchListsFromSolution(List<Integer> dispatchListRaw,
-                                                                          int dispatchListVertexLength,
-                                                                          int vertexNum) {
-        ArrayList<ArrayList<Integer>> dispatchLists = new ArrayList<>();
-        for (int vertexId = 0; vertexId < vertexNum; vertexId++) {
-            ArrayList<Integer> dispatchList = new ArrayList<>();
-            for (int dispatchListSlotId = 0; dispatchListSlotId < dispatchListVertexLength; dispatchListSlotId++) {
-                dispatchList.add(dispatchListRaw.get(vertexId * dispatchListVertexLength + dispatchListSlotId));
-            }
-            dispatchLists.add(vertexId, dispatchList);
-        }
-        return dispatchLists;
     }
 }

@@ -10,7 +10,7 @@ import java.util.*;
 
 public class EvaluatorUtils {
 
-    public static ArrayList<ArrayList<Integer>> extractDispatchListsFromSolution(List<Integer> dispatchListRaw,
+    public ArrayList<ArrayList<Integer>> extractDispatchListsFromSolution(List<Integer> dispatchListRaw,
                                                                           int dispatchListVertexLength,
                                                                           int vertexNum) {
         ArrayList<ArrayList<Integer>> dispatchLists = new ArrayList<>();
@@ -24,7 +24,7 @@ public class EvaluatorUtils {
         return dispatchLists;
     }
 
-    public static boolean allCustomersSupplied(List<Double> customersCurrentDemand) {
+    public boolean allCustomersSupplied(List<Double> customersCurrentDemand) {
         for (Double demand : customersCurrentDemand) {
             if (demand > 0.0) {
                 return false;
@@ -33,7 +33,7 @@ public class EvaluatorUtils {
         return true;
     }
 
-    public static int addEdgeCost(int currentPositionId, int nextPositionId, Map<Vertex, List<Edge>> graphStructure) {
+    public int addEdgeCost(int currentPositionId, int nextPositionId, Map<Vertex, List<Edge>> graphStructure) {
         Vertex currentVertex = null;
         Vertex nextVertex = null;
         int result = 0;
@@ -54,7 +54,7 @@ public class EvaluatorUtils {
         return result;
     }
 
-    public static void saveSolution(IntegerSolution solution,ArrayList<ArrayList<Integer>> dispatchLists){
+    public void saveSolution(IntegerSolution solution,ArrayList<ArrayList<Integer>> dispatchLists){
         int index = 0;
         for(ArrayList<Integer> dispatchList : dispatchLists){
             for(Integer value : dispatchList){
