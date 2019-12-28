@@ -114,20 +114,10 @@ public class VRPSDLuckyStarEvaluator {
                                                                           int dispatchListVertexLength,
                                                                           int depotDispatchListLength) {
         ArrayList<ArrayList<Boolean>> isDispatchListSlotUsed = new ArrayList<>();
-
-        ArrayList<Boolean> isDispatchListSlotUsedSingle = new ArrayList<>();
-        for (int dispatchListSlotId = 0; dispatchListSlotId < depotDispatchListLength; dispatchListSlotId++) {
-            isDispatchListSlotUsedSingle.add(false);
-        }
-        isDispatchListSlotUsed.add(0, isDispatchListSlotUsedSingle);
-
+        isDispatchListSlotUsed.add(0, new ArrayList<>(Collections.nCopies(depotDispatchListLength, false)));
 
         for (int dispatchListNum = 1; dispatchListNum < dispatchLists.size(); dispatchListNum++) {
-            isDispatchListSlotUsedSingle = new ArrayList<>();
-            for (int dispatchListSlotId = 0; dispatchListSlotId < dispatchListVertexLength; dispatchListSlotId++) {
-                isDispatchListSlotUsedSingle.add(false);
-            }
-            isDispatchListSlotUsed.add(dispatchListNum, isDispatchListSlotUsedSingle);
+            isDispatchListSlotUsed.add(dispatchListNum, new ArrayList<>(Collections.nCopies(dispatchListVertexLength, false)));
         }
         return isDispatchListSlotUsed;
     }
