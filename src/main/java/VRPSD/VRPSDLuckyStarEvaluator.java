@@ -24,7 +24,7 @@ public class VRPSDLuckyStarEvaluator {
         ArrayList<Integer> currentVehiclesPositions = new ArrayList<>(Collections.nCopies(numOfVehicles, 0));
         ArrayList<Double> currentVehiclesLoad = new ArrayList<>(Collections.nCopies(numOfVehicles, vehicleCapacity));
         ArrayList<ArrayList<Integer>> dispatchLists =
-                extractDispatchListsFromSolutionWithVariableDepot(vrpsdSolution.getVariables(), dispatchListLength, vertexNum, depotDispatchListLength);
+                evaluatorUtils.extractDispatchListsFromSolutionWithVariableDepot(vrpsdSolution.getVariables(), dispatchListLength, vertexNum, depotDispatchListLength);
         ArrayList<Integer> dispatchListsPointers = new ArrayList<>(Collections.nCopies(vertexNum, 0));
         Map<Vertex, List<Edge>> graphStructure = graph.getStructure();
         ArrayList<Double> customersCurrentDemand = new ArrayList<>(customersDemand);
@@ -86,28 +86,6 @@ public class VRPSDLuckyStarEvaluator {
         evaluatorUtils.saveSolution(vrpsdSolution, dispatchLists);
 
         return (step < 500) ? result : max_eval;
-    }
-
-    private ArrayList<ArrayList<Integer>> extractDispatchListsFromSolutionWithVariableDepot(List<Integer> dispatchListRaw,
-                                                                          int dispatchListVertexLength,
-                                                                          int vertexNum,
-                                                                          int depotDispatchListLength) {
-        ArrayList<ArrayList<Integer>> dispatchLists = new ArrayList<>();
-
-        ArrayList<Integer> dispatchList = new ArrayList<>();
-        for (int dispatchListSlotId = 0; dispatchListSlotId < depotDispatchListLength; dispatchListSlotId++) {
-            dispatchList.add(dispatchListRaw.get(dispatchListSlotId));
-        }
-        dispatchLists.add(0, dispatchList);
-
-        for (int vertexId = 1; vertexId < vertexNum; vertexId++) {
-            dispatchList = new ArrayList<>();
-            for (int dispatchListSlotId = 0; dispatchListSlotId < dispatchListVertexLength; dispatchListSlotId++) {
-                dispatchList.add(dispatchListRaw.get(depotDispatchListLength + (vertexId-1) * dispatchListVertexLength + dispatchListSlotId));
-            }
-            dispatchLists.add(vertexId, dispatchList);
-        }
-        return dispatchLists;
     }
 
     private ArrayList<ArrayList<Boolean>> setupIsDispatchListSlotUsedList(ArrayList<ArrayList<Integer>> dispatchLists,
