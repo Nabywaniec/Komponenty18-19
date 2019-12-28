@@ -13,6 +13,7 @@ public class VRPSD extends AbstractIntegerProblem {
     private Graph graph;
     private ArrayList<Double> customerDemands;
     private int dispatchListLength;
+    private int depotDispatchListLength;
     private int numOfVehicles;
     private double capacity;
     private FileWriter fw;
@@ -23,6 +24,10 @@ public class VRPSD extends AbstractIntegerProblem {
         return dispatchListLength;
     }
 
+    public int getDepotDispatchListLength() {
+        return depotDispatchListLength;
+    }
+
     public int getNumOfVehicles() {
         return numOfVehicles;
     }
@@ -31,15 +36,16 @@ public class VRPSD extends AbstractIntegerProblem {
         return capacity;
     }
 
-    public VRPSD(Graph graph, ArrayList<Double> customerDemands, int dispatchListLength,
+    public VRPSD(Graph graph, ArrayList<Double> customerDemands, int dispatchListLength, int depotDispatchListLength,
                  int numOfVehicles, double capacity, FileWriter fw){
         this.graph = graph;
         this.customerDemands = customerDemands;
         this.dispatchListLength = dispatchListLength;
+        this.depotDispatchListLength = depotDispatchListLength;
         this.numOfVehicles = numOfVehicles;
         this.capacity = capacity;
 
-        this.setNumberOfVariables(this.graph.getVertexNum()*this.dispatchListLength);
+        this.setNumberOfVariables(this.depotDispatchListLength + (this.graph.getVertexNum()-1)*this.dispatchListLength);
         this.setNumberOfObjectives(1);
         this.setName("VRPSD");
 

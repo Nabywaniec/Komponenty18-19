@@ -33,25 +33,28 @@ public class VRPSDRunner extends AbstractAlgorithmRunner {
 
         String filename = "";
         int dispatchListLength = 0;
+        int depotDispatchListLength = 0;
         int numOfDrivers = 0;
         double capacity = 0;
         double alpha = 0;
         double gamma = 0;
         String referenceParetoFront = "";
         Configuration conf = null;
-        if (args.length == 6) {
+        if (args.length == 7) {
             filename = args[0];
             conf = new Configuration(fullDataFolderName + filename);
             dispatchListLength = Integer.parseInt(args[1]);
-            numOfDrivers = Integer.parseInt(args[2]);
-            capacity = Double.parseDouble(args[3]);
-            alpha = Double.parseDouble(args[4]);
-            gamma = Double.parseDouble(args[5]);
+            depotDispatchListLength = Integer.parseInt(args[2]);
+            numOfDrivers = Integer.parseInt(args[3]);
+            capacity = Double.parseDouble(args[4]);
+            alpha = Double.parseDouble(args[5]);
+            gamma = Double.parseDouble(args[6]);
 
         } else {
             filename = "eil22.sd";
             conf = new Configuration(fullDataFolderName + filename);
-            dispatchListLength = 3;
+            dispatchListLength = 2;
+            depotDispatchListLength = 2;
             numOfDrivers = conf.getMinNumOfTrucks();
             capacity = conf.getCapacity();
             alpha = 0.1;
@@ -80,7 +83,7 @@ public class VRPSDRunner extends AbstractAlgorithmRunner {
 //        VRPSDSimpleEvaluator evaluatorSimple = new VRPSDSimpleEvaluator();
 //        System.out.println(evaluatorSimple.evaluateSimple(numOfDrivers, capacity, graph, customerDemands));
 
-        problem = new VRPSD(graph, customerDemands, dispatchListLength, numOfDrivers, capacity, fw);
+        problem = new VRPSD(graph, customerDemands, dispatchListLength, depotDispatchListLength, numOfDrivers, capacity, fw);
 
         double crossoverProbability = 0.9 ;
         double crossoverDistributionIndex = 20.0 ;
