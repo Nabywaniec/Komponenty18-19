@@ -24,7 +24,7 @@ public class VRPSDLuckyStarEvaluator {
         ArrayList<Integer> currentVehiclesPositions = new ArrayList<>(Collections.nCopies(numOfVehicles, 0));
         ArrayList<Double> currentVehiclesLoad = new ArrayList<>(Collections.nCopies(numOfVehicles, vehicleCapacity));
         ArrayList<ArrayList<Integer>> dispatchLists =
-                extractDispatchListsFromSolution(vrpsdSolution.getVariables(), dispatchListLength, vertexNum, depotDispatchListLength);
+                extractDispatchListsFromSolutionWithVariableDepot(vrpsdSolution.getVariables(), dispatchListLength, vertexNum, depotDispatchListLength);
         ArrayList<Integer> dispatchListsPointers = new ArrayList<>(Collections.nCopies(vertexNum, 0));
         Map<Vertex, List<Edge>> graphStructure = graph.getStructure();
         ArrayList<Double> customersCurrentDemand = new ArrayList<>(customersDemand);
@@ -88,7 +88,7 @@ public class VRPSDLuckyStarEvaluator {
         return (step < 500) ? result : max_eval;
     }
 
-    private ArrayList<ArrayList<Integer>> extractDispatchListsFromSolution(List<Integer> dispatchListRaw,
+    private ArrayList<ArrayList<Integer>> extractDispatchListsFromSolutionWithVariableDepot(List<Integer> dispatchListRaw,
                                                                           int dispatchListVertexLength,
                                                                           int vertexNum,
                                                                           int depotDispatchListLength) {
