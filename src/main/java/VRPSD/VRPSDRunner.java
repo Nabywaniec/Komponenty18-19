@@ -85,7 +85,7 @@ public class VRPSDRunner extends AbstractAlgorithmRunner {
         VRPSDSimpleEvaluator evaluatorSimple = new VRPSDSimpleEvaluator();
         System.out.println(evaluatorSimple.evaluateSimple(numOfDrivers, capacity, graph, customerDemands));
 
-        String list = "21 14 12 6 10 10 9 16 20 3 4 20 8 10 11 7 20 20 10 0 0 2 16 20 11 10 10 1 20 11 2 12 9 4 10 20 7 20 11 3 16 9 13 18 19 17 11 11 20 17 11 3 2 20 15 17 17 18 20 10 12 21 21 21 5 19";
+        String list = "19 10 13 1 2 4 4 12 12 9 5 5 11 0 12 5 12 0 6 16 0 15 12 4 18 17 12 9 5 12 14 12 6 11 0 0 21 0 0 3 7 2 1 15 16 6 12 16 6 12 12 13 5 6 7 5 5 20 8 9 21 12 4 17 5 5";
         int result = evaluatorSimple.simpleEvaluateStringDispatchList(list, graph, customerDemands, numOfDrivers, capacity, dispatchListLength);
         System.out.println(result);
         problem = new VRPSD(graph, customerDemands, dispatchListLength, numOfDrivers, capacity, fw);

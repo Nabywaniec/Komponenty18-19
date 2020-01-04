@@ -8,7 +8,7 @@ public class Graph {
     private Map<Vertex, List<Edge>> structure = new HashMap<>();
     private Map<Integer, List<Integer>> dispatchList = new HashMap<>();
     private int vertexNum = 0;
-    private Map<Integer, List<Integer>>nearestNeighbours = new HashMap<>();
+    private Map<Integer, Map<Integer, Double>>nearestNeighbours = new HashMap<>();
 
     public Map<Vertex, List<Edge>> getStructure() {
         return structure;
@@ -118,7 +118,16 @@ public class Graph {
     public void setNearestNeighboursMap(){
         List<Vertex> vertexList = new ArrayList<>();
         vertexList.addAll(structure.keySet());
-        double[][] distances = getDistances(vertexList);
+        int vertexesNumber = vertexList.size();
+        double[][] distances;
+        distances = new double[vertexesNumber][vertexesNumber];
+        for (int i = 0; i < vertexesNumber; i++) {
+            for (int j = 0; j < vertexesNumber; j++) {
+                Vertex v1 = vertexList.get(i);
+                Vertex v2 = vertexList.get(j);
+                distances[i][j] = Math.sqrt(Math.pow((v2.getX() - v1.getX()), 2) + Math.pow(v2.getY() - v1.getY(), 2));
+            }
+        }
         for(int i=0;i<vertexNum;i++){
             ArrayList<Double> distancesForSingleVertex = new ArrayList<>();
             for(int j=0;j<vertexNum;j++){
@@ -128,15 +137,17 @@ public class Graph {
             }
             ArrayList<Double> distancesForSingleVertexSorted = new ArrayList<>(distancesForSingleVertex);
             Collections.sort(distancesForSingleVertex);
-            List<Integer> nearestVertexesIndexes = new ArrayList<>();
+            Map<Integer, Double> nearestVertexesIndexes = new HashMap<>();
             for(int k=0;k<4;k++){
-                nearestVertexesIndexes.add(distancesForSingleVertex.indexOf(distancesForSingleVertexSorted.get(k)));
+                nearestVertexesIndexes.put(distancesForSingleVertex.indexOf(distancesForSingleVertexSorted.get(k)),
+                        distancesForSingleVertex.get(k));
             }
+
             nearestNeighbours.put(i, nearestVertexesIndexes);
         }
     }
 
-    public Map<Integer, List<Integer>> getNearestNeighbours(){
+    public Map<Integer, Map<Integer, Double>> getNearestNeighbours(){
         return nearestNeighbours;
     }
 

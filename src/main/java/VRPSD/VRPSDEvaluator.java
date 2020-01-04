@@ -6,6 +6,7 @@ import Model.Vertex;
 import org.uma.jmetal.solution.IntegerSolution;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class VRPSDEvaluator {
 
@@ -59,7 +60,7 @@ public class VRPSDEvaluator {
                     }
                     result += addEdgeCost(currentPositionId, nextPositionId, graphStructure);
 
-                    if(dispatchListsPointers.get(currentPositionId).equals(dispatchListLength-1)){
+                    if (dispatchListsPointers.get(currentPositionId).equals(dispatchListLength - 1)) {
                         isDispatchListLooped.set(currentPositionId, true);
                     }
 
@@ -87,24 +88,35 @@ public class VRPSDEvaluator {
                                                                   ArrayList<Boolean> isDispatchListLooped) {
         ArrayList<Integer> dispatchList = dispatchLists.get(currentPositionId);
         int old_size = dispatchList.size();
-        for(int i=0;i<dispatchList.size(); i++){
-            if(dispatchList.get(i).equals(customerNumber) && dispatchListsPointers.get(currentPositionId)  < i && isDispatchListLooped.get(currentPositionId) == false)
-            {
+        for (int i = 0; i < dispatchList.size(); i++) {
+            if (dispatchList.get(i).equals(customerNumber) && dispatchListsPointers.get(currentPositionId) < i && isDispatchListLooped.get(currentPositionId) == false) {
                 dispatchList.set(i, new Integer(-1));
             }
         }
-        while(dispatchList.contains(-1)){
+        while (dispatchList.contains(-1)) {
             dispatchList.remove(new Integer(-1));
         }
-        int actual_size =  dispatchList.size();
-        Random random = new Random();
-        ArrayList<Double> customersCurrentDemandSorted = new ArrayList<>(customersCurrentDemand);
-        Collections.sort(customersCurrentDemandSorted, Collections.reverseOrder());
+        int actual_size = dispatchList.size();
 
-        for(int i=0;i<old_size-actual_size;i++){
-            int randomIndex = random.nextInt(10) % 3;
-            dispatchList.add(customersCurrentDemand.indexOf(customersCurrentDemandSorted.get(randomIndex)));
-            //  dispatchList.add(graph.getNearestNeighbours().get(currentPositionId).get(randomIndex));
+
+        Map<Integer, Double> demandToDistance = new HashMap<>();
+        Map<Integer, Map<Integer, Double>> nearestNeighbours = graph.getNearestNeighbours();
+        Map<Integer, Double> nearestNeighboursForCurrentVertex = nearestNeighbours.get(currentPositionId);
+        for (Integer i : nearestNeighboursForCurrentVertex.keySet()) {
+                demandToDistance.put(i, customersCurrentDemand.get(i)/nearestNeighboursForCurrentVertex.get(i) );
+        }
+
+        Map<Integer, Double> demandToDistanceSorted =
+                demandToDistance.entrySet().stream()
+                        .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+                                (e1, e2) -> e1, LinkedHashMap::new));
+
+        for (int i = 0; i < old_size - actual_size; i++) {
+            Map.Entry<Integer, Double> entry = demandToDistanceSorted.entrySet().iterator().next();
+            Integer key = entry.getKey();
+
+            dispatchList.add(key);
         }
         dispatchLists.set(currentPositionId, dispatchList);
         return dispatchLists;
@@ -141,12 +153,12 @@ public class VRPSDEvaluator {
         return result;
     }
 
-    private void saveSolution(IntegerSolution solution,ArrayList<ArrayList<Integer>> dispatchLists){
+    private void saveSolution(IntegerSolution solution, ArrayList<ArrayList<Integer>> dispatchLists) {
         int index = 0;
-        for(ArrayList<Integer> dispatchList : dispatchLists){
-            for(Integer value : dispatchList){
+        for (ArrayList<Integer> dispatchList : dispatchLists) {
+            for (Integer value : dispatchList) {
                 solution.setVariableValue(index, value);
-                index +=1;
+                index += 1;
             }
         }
     }
