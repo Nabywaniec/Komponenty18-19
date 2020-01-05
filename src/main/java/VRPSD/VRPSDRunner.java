@@ -67,6 +67,7 @@ public class VRPSDRunner extends AbstractAlgorithmRunner {
 //        graph.setFullGraphStructure(onlyGraphFolderName+filename);
 //        graph.setStructure("src/main/resources/VRPSD/VRPSDtest.txt");
         graph.setFullGraphStructureWithVertexList(conf.getVertexesList());
+        graph.setVertexesList(conf.getVertexesList());
         graph.setNearestNeighboursMap();
 
         FileWriter fw = null;
@@ -85,7 +86,7 @@ public class VRPSDRunner extends AbstractAlgorithmRunner {
         VRPSDSimpleEvaluator evaluatorSimple = new VRPSDSimpleEvaluator();
         System.out.println(evaluatorSimple.evaluateSimple(numOfDrivers, capacity, graph, customerDemands));
 
-        String list = "19 10 13 1 2 4 4 12 12 9 5 5 11 0 12 5 12 0 6 16 0 15 12 4 18 17 12 9 5 12 14 12 6 11 0 0 21 0 0 3 7 2 1 15 16 6 12 16 6 12 12 13 5 6 7 5 5 20 8 9 21 12 4 17 5 5";
+        String list = "13 14 5 1 2 0 2 6 0 8 6 6 1 6 6 15 2 2 10 4 4 10 21 6 12 4 4 18 2 6 3 12 5 9 1 17 12 17 20 11 4 19 7 15 2 21 19 17 9 1 1 17 19 20 16 19 17 2 20 20 7 17 19 19 19 20";
         int result = evaluatorSimple.simpleEvaluateStringDispatchList(list, graph, customerDemands, numOfDrivers, capacity, dispatchListLength);
         System.out.println(result);
         problem = new VRPSD(graph, customerDemands, dispatchListLength, numOfDrivers, capacity, fw);

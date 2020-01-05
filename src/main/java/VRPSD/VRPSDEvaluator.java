@@ -78,6 +78,7 @@ public class VRPSDEvaluator {
             result += addEdgeCost(currentVehiclesPositions.get(carId), 0, graphStructure);
         }
         saveSolution(vrpsdSolution, dispatchLists);
+        //System.out.println(result);
         return (step < 500) ? result : max_eval;
 
     }
