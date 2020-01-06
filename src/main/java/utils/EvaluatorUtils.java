@@ -3,7 +3,6 @@ package utils;
 import Model.Edge;
 import Model.Graph;
 import Model.Vertex;
-import VRPSD.VRPSD;
 import org.uma.jmetal.solution.IntegerSolution;
 
 import java.util.*;
@@ -112,5 +111,19 @@ public class EvaluatorUtils {
             customerId++;
         }
         return customersFitness.indexOf(Collections.max(customersFitness));
+    }
+
+    public int findClosestDemandingNeighbour(int currentPositionId, Graph graph, ArrayList<Double> customersCurrentDemand) {
+        Map<Integer, Double> neighbourMap = graph.getNearestNeighbours().get(currentPositionId);
+        int bestNeighbourIndex = 0;
+        double lowestDistance = Double.MAX_VALUE;
+        for(Map.Entry<Integer, Double> neighbour : neighbourMap.entrySet()) {
+            if(neighbour.getValue() < lowestDistance && customersCurrentDemand.get(neighbour.getKey()) != 0) {
+                lowestDistance = neighbour.getValue();
+                bestNeighbourIndex = neighbour.getKey();
+            }
+        }
+        //returning 0 means every neighbour has no demand
+        return bestNeighbourIndex;
     }
 }
