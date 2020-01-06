@@ -126,4 +126,19 @@ public class EvaluatorUtils {
         //returning 0 means every neighbour has no demand
         return bestNeighbourIndex;
     }
+
+    public int findBestDemandPerDistanceNeighbour(int currentPositionId, Graph graph, ArrayList<Double> customersCurrentDemand) {
+        Map<Integer, Double> neighbourMap = graph.getNearestNeighbours().get(currentPositionId);
+        int bestNeighbourIndex = 0;
+        double bestFitness = 0;
+        for(Map.Entry<Integer, Double> neighbour : neighbourMap.entrySet()) {
+            if((customersCurrentDemand.get(bestNeighbourIndex) / neighbour.getValue()) > bestFitness
+                    && customersCurrentDemand.get(neighbour.getKey()) != 0) {
+                bestNeighbourIndex = neighbour.getKey();
+                bestFitness = customersCurrentDemand.get(bestNeighbourIndex) / neighbour.getValue();
+            }
+        }
+        //returning 0 means every neighbour has no demand
+        return bestNeighbourIndex;
+    }
 }
