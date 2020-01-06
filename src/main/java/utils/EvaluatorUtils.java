@@ -99,4 +99,18 @@ public class EvaluatorUtils {
         }
         return customersFitness.indexOf(Collections.min(customersFitness));
     }
+
+    public int findBestDemandPerDistanceCustomer(int currentPositionId, Map<Vertex, List<Edge>> graphStructure, ArrayList<Double> customersCurrentDemand) {
+        int customerId = 0;
+        ArrayList<Double> customersFitness = new ArrayList<>();
+        for(Double customerDemand : customersCurrentDemand){
+            if(customerDemand == 0 || customerId == currentPositionId || customerId == 0){
+                customersFitness.add(0.0);
+            } else {
+                customersFitness.add(customerDemand / addEdgeCost(currentPositionId, customerId, graphStructure));
+            }
+            customerId++;
+        }
+        return customersFitness.indexOf(Collections.max(customersFitness));
+    }
 }
