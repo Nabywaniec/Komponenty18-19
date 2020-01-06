@@ -18,16 +18,17 @@ public class VRPSDLuckyStarEvaluator {
         int numOfVehicles = vrpsdProblem.getNumOfVehicles();
         double vehicleCapacity = vrpsdProblem.getCapacity();
         int dispatchListLength = vrpsdProblem.getDispatchListLength();
+        int depotDispatchListLength = vrpsdProblem.getDepotDispatchListLength();
         int vertexNum = graph.getVertexNum();
 
         ArrayList<Integer> currentVehiclesPositions = new ArrayList<>(Collections.nCopies(numOfVehicles, 0));
         ArrayList<Double> currentVehiclesLoad = new ArrayList<>(Collections.nCopies(numOfVehicles, vehicleCapacity));
         ArrayList<ArrayList<Integer>> dispatchLists =
-                evaluatorUtils.extractDispatchListsFromSolution(vrpsdSolution.getVariables(), dispatchListLength, vertexNum);
+                evaluatorUtils.extractDispatchListsFromSolutionWithVariableDepot(vrpsdSolution.getVariables(), dispatchListLength, vertexNum, depotDispatchListLength);
         ArrayList<Integer> dispatchListsPointers = new ArrayList<>(Collections.nCopies(vertexNum, 0));
         Map<Vertex, List<Edge>> graphStructure = graph.getStructure();
         ArrayList<Double> customersCurrentDemand = new ArrayList<>(customersDemand);
-        ArrayList<ArrayList<Boolean>> isDispatchListSlotUsed = setupIsDispatchListSlotUsedList(dispatchLists, dispatchListLength);
+        ArrayList<ArrayList<Boolean>> isDispatchListSlotUsed = setupIsDispatchListSlotUsedList(dispatchLists, dispatchListLength, depotDispatchListLength);
 
         int step = -1;
         int result = 0;
@@ -61,7 +62,11 @@ public class VRPSDLuckyStarEvaluator {
 
                     isDispatchListSlotUsed.get(currentPositionId).set(dispatchListsPointers.get(currentPositionId), true);
 
-                    dispatchListsPointers.set(currentPositionId, (dispatchListsPointers.get(currentPositionId) + 1) % dispatchListLength);
+                    if(currentPositionId == 0){
+                        dispatchListsPointers.set(currentPositionId, (dispatchListsPointers.get(currentPositionId) + 1) % depotDispatchListLength);
+                    } else {
+                        dispatchListsPointers.set(currentPositionId, (dispatchListsPointers.get(currentPositionId) + 1) % dispatchListLength);
+                    }
                     currentVehiclesPositions.set(carId, nextPositionId);
 
                     if (customersCurrentDemand.get(nextPositionId) < currentVehiclesLoad.get(carId)) {
@@ -83,14 +88,14 @@ public class VRPSDLuckyStarEvaluator {
         return (step < 500) ? result : max_eval;
     }
 
-    private ArrayList<ArrayList<Boolean>> setupIsDispatchListSlotUsedList(ArrayList<ArrayList<Integer>> dispatchLists, int dispatchListVertexLength) {
+    private ArrayList<ArrayList<Boolean>> setupIsDispatchListSlotUsedList(ArrayList<ArrayList<Integer>> dispatchLists,
+                                                                          int dispatchListVertexLength,
+                                                                          int depotDispatchListLength) {
         ArrayList<ArrayList<Boolean>> isDispatchListSlotUsed = new ArrayList<>();
-        for (int dispatchListNum = 0; dispatchListNum < dispatchLists.size(); dispatchListNum++) {
-            ArrayList<Boolean> isDispatchListSlotUsedSingle = new ArrayList<>();
-            for (int dispatchListSlotId = 0; dispatchListSlotId < dispatchListVertexLength; dispatchListSlotId++) {
-                isDispatchListSlotUsedSingle.add(false);
-            }
-            isDispatchListSlotUsed.add(dispatchListNum, isDispatchListSlotUsedSingle);
+        isDispatchListSlotUsed.add(0, new ArrayList<>(Collections.nCopies(depotDispatchListLength, false)));
+
+        for (int dispatchListNum = 1; dispatchListNum < dispatchLists.size(); dispatchListNum++) {
+            isDispatchListSlotUsed.add(dispatchListNum, new ArrayList<>(Collections.nCopies(dispatchListVertexLength, false)));
         }
         return isDispatchListSlotUsed;
     }

@@ -24,6 +24,28 @@ public class EvaluatorUtils {
         return dispatchLists;
     }
 
+    public ArrayList<ArrayList<Integer>> extractDispatchListsFromSolutionWithVariableDepot(List<Integer> dispatchListRaw,
+                                                                                            int dispatchListVertexLength,
+                                                                                            int vertexNum,
+                                                                                            int depotDispatchListLength) {
+        ArrayList<ArrayList<Integer>> dispatchLists = new ArrayList<>();
+
+        ArrayList<Integer> dispatchList = new ArrayList<>();
+        for (int dispatchListSlotId = 0; dispatchListSlotId < depotDispatchListLength; dispatchListSlotId++) {
+            dispatchList.add(dispatchListRaw.get(dispatchListSlotId));
+        }
+        dispatchLists.add(0, dispatchList);
+
+        for (int vertexId = 1; vertexId < vertexNum; vertexId++) {
+            dispatchList = new ArrayList<>();
+            for (int dispatchListSlotId = 0; dispatchListSlotId < dispatchListVertexLength; dispatchListSlotId++) {
+                dispatchList.add(dispatchListRaw.get(depotDispatchListLength + (vertexId-1) * dispatchListVertexLength + dispatchListSlotId));
+            }
+            dispatchLists.add(vertexId, dispatchList);
+        }
+        return dispatchLists;
+    }
+
     public boolean allCustomersSupplied(List<Double> customersCurrentDemand) {
         for (Double demand : customersCurrentDemand) {
             if (demand > 0.0) {
