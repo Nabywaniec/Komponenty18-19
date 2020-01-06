@@ -54,7 +54,7 @@ public class VRPSDRunner extends AbstractAlgorithmRunner {
             filename = "eil22.sd";
             conf = new Configuration(fullDataFolderName + filename);
             dispatchListLength = 2;
-            depotDispatchListLength = 2;
+            depotDispatchListLength = dispatchListLength;
             numOfDrivers = conf.getMinNumOfTrucks();
             capacity = conf.getCapacity();
             alpha = 0.1;
