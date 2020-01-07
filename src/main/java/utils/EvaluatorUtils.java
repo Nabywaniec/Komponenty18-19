@@ -3,7 +3,6 @@ package utils;
 import Model.Edge;
 import Model.Graph;
 import Model.Vertex;
-import VRPSD.VRPSD;
 import org.uma.jmetal.solution.IntegerSolution;
 
 import java.util.*;
@@ -98,5 +97,48 @@ public class EvaluatorUtils {
             customerId++;
         }
         return customersFitness.indexOf(Collections.min(customersFitness));
+    }
+
+    public int findBestDemandPerDistanceCustomer(int currentPositionId, Map<Vertex, List<Edge>> graphStructure, ArrayList<Double> customersCurrentDemand) {
+        int customerId = 0;
+        ArrayList<Double> customersFitness = new ArrayList<>();
+        for(Double customerDemand : customersCurrentDemand){
+            if(customerDemand == 0 || customerId == currentPositionId || customerId == 0){
+                customersFitness.add(0.0);
+            } else {
+                customersFitness.add(customerDemand / addEdgeCost(currentPositionId, customerId, graphStructure));
+            }
+            customerId++;
+        }
+        return customersFitness.indexOf(Collections.max(customersFitness));
+    }
+
+    public int findClosestDemandingNeighbour(int currentPositionId, Graph graph, ArrayList<Double> customersCurrentDemand) {
+        Map<Integer, Double> neighbourMap = graph.getNearestNeighbours().get(currentPositionId);
+        int bestNeighbourIndex = 0;
+        double lowestDistance = Double.MAX_VALUE;
+        for(Map.Entry<Integer, Double> neighbour : neighbourMap.entrySet()) {
+            if(neighbour.getValue() < lowestDistance && customersCurrentDemand.get(neighbour.getKey()) != 0) {
+                lowestDistance = neighbour.getValue();
+                bestNeighbourIndex = neighbour.getKey();
+            }
+        }
+        //returning 0 means every neighbour has no demand
+        return bestNeighbourIndex;
+    }
+
+    public int findBestDemandPerDistanceNeighbour(int currentPositionId, Graph graph, ArrayList<Double> customersCurrentDemand) {
+        Map<Integer, Double> neighbourMap = graph.getNearestNeighbours().get(currentPositionId);
+        int bestNeighbourIndex = 0;
+        double bestFitness = 0;
+        for(Map.Entry<Integer, Double> neighbour : neighbourMap.entrySet()) {
+            if((customersCurrentDemand.get(bestNeighbourIndex) / neighbour.getValue()) > bestFitness
+                    && customersCurrentDemand.get(neighbour.getKey()) != 0) {
+                bestNeighbourIndex = neighbour.getKey();
+                bestFitness = customersCurrentDemand.get(bestNeighbourIndex) / neighbour.getValue();
+            }
+        }
+        //returning 0 means every neighbour has no demand
+        return bestNeighbourIndex;
     }
 }
