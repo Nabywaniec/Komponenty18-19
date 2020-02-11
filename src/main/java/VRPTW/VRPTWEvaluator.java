@@ -48,7 +48,7 @@ public class VRPTWEvaluator {
 
                     result += evaluatorUtils.addEdgeCost(currentPositionId, nextPositionId, graphStructure);
                     //aktualizujemy licznik dla danego samochodu
-                    timeCounter.set(carId, timeCounter.get(carId) + result + serviceTime);
+                    timeCounter.set(carId, timeCounter.get(carId) + result);
 
                     //sprawdzamy czy możemy obsłużyć tego klineta
                     if (timeCounter.get(carId) >= readyTimes.get(nextPositionId)
