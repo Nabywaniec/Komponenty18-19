@@ -141,4 +141,22 @@ public class EvaluatorUtils {
         //returning 0 means every neighbour has no demand
         return bestNeighbourIndex;
     }
+
+    public Integer findClosestDemandingCustomerWithinTime(int currentPositionId, Map<Vertex, List<Edge>> graphStructure,
+                                                          ArrayList<Double> customersCurrentDemand, int step,
+                                                          List<Double> readyTimes, List<Double> dueTimes) {
+        int customerId = 0;
+        ArrayList<Double> customersFitness = new ArrayList<>();
+        for(Double customerDemand : customersCurrentDemand){
+            if(customerDemand == 0 || customerId == currentPositionId || customerId == 0
+                    || step + addEdgeCost(currentPositionId, customerId, graphStructure) > dueTimes.get(customerId)
+                    || step + addEdgeCost(currentPositionId, customerId, graphStructure) < readyTimes.get(customerId)){
+                customersFitness.add(Double.MAX_VALUE);
+            } else {
+                customersFitness.add(readyTimes.get(customerId));
+            }
+            customerId++;
+        }
+        return customersFitness.indexOf(Collections.min(customersFitness));
+    }
 }
