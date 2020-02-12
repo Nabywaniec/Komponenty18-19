@@ -51,18 +51,20 @@ public class VRPTWEvaluator {
                     timeCounter.set(carId, timeCounter.get(carId) + edgeCost);
 
                     //sprawdzamy czy możemy obsłużyć tego klineta
-   //                 if (timeCounter.get(carId) >= readyTimes.get(nextPositionId)
-   //                         && timeCounter.get(carId) <= dueTimes.get(nextPositionId)) {
-                        if (customersCurrentDemand.get(nextPositionId) < currentVehiclesLoad.get(carId)) {
-                            currentVehiclesLoad.set(carId, currentVehiclesLoad.get(carId) - customersCurrentDemand.get(nextPositionId));
-                            customersCurrentDemand.set(nextPositionId, 0.0);
-                        } else {
-                            customersCurrentDemand.set(nextPositionId, customersCurrentDemand.get(nextPositionId) - currentVehiclesLoad.get(carId));
-                            currentVehiclesLoad.set(carId, 0.0);
-                        }
-                        //obsłużylismy, czyli dokładamy cały czas obsługi
+                    //                 if (timeCounter.get(carId) >= readyTimes.get(nextPositionId)
+                    //                         && timeCounter.get(carId) <= dueTimes.get(nextPositionId)) {
+                    if (customersCurrentDemand.get(nextPositionId) < currentVehiclesLoad.get(carId)) {
+                        currentVehiclesLoad.set(carId, currentVehiclesLoad.get(carId) - customersCurrentDemand.get(nextPositionId));
+                        customersCurrentDemand.set(nextPositionId, 0.0);
+                    } else {
+                        customersCurrentDemand.set(nextPositionId, customersCurrentDemand.get(nextPositionId) - currentVehiclesLoad.get(carId));
+                        currentVehiclesLoad.set(carId, 0.0);
+                    }
+                    //obsłużylismy, czyli dokładamy cały czas obsługi
+                    if (nextPositionId != 0) {
                         timeCounter.set(carId, timeCounter.get(carId) + 10.0);
-    //                }
+                    }
+                    //                }
 
                     if (dispatchListsPointers.get(currentPositionId).equals(dispatchListLength - 1)) {
                         isDispatchListLooped.set(currentPositionId, true);

@@ -76,7 +76,7 @@ public class Configuration {
             e.printStackTrace();
         }
         //to tak na razie wpisane na sztywno
-        this.minNumOfTrucks =20;
+        this.minNumOfTrucks =15;
         this.bestValue = 600;
 
     }
