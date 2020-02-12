@@ -61,9 +61,9 @@ public class Configuration {
                         int vertexId = Integer.parseInt(splitted.get(0))-1;
                         int x = (int) Double.parseDouble(splitted.get(1));
                         int y = (int) Double.parseDouble(splitted.get(2));
-                        double readyTime = Double.parseDouble(splitted.get(3));
-                        double dueTime = Double.parseDouble(splitted.get(4));
-                        double customerDemand = Double.parseDouble(splitted.get(5));
+                        double readyTime = Double.parseDouble(splitted.get(4));
+                        double dueTime = Double.parseDouble(splitted.get(5));
+                        double customerDemand = Double.parseDouble(splitted.get(3));
                         readyTimes.add(readyTime);
                         dueTimes.add(dueTime);
                         customersDemand.add(customerDemand);
@@ -76,7 +76,7 @@ public class Configuration {
             e.printStackTrace();
         }
         //to tak na razie wpisane na sztywno
-        this.minNumOfTrucks = 10;
+        this.minNumOfTrucks =20;
         this.bestValue = 600;
 
     }

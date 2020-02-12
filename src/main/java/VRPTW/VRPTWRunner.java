@@ -53,7 +53,7 @@ public class VRPTWRunner extends AbstractAlgorithmRunner {
         } else {
             filename = "r101.txt";
             conf = new Configuration(fullDataFolderName + filename);
-            dispatchListLength = 2;
+            dispatchListLength = 20;
             depotDispatchListLength = dispatchListLength;
             numOfDrivers = conf.getMinNumOfTrucks();
             capacity = conf.getCapacity();

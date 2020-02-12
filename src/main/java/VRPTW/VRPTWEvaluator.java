@@ -45,13 +45,14 @@ public class VRPTWEvaluator {
                     int nextPositionId = dispatchLists.get(currentPositionId).get(dispatchListsPointers.get(currentPositionId));
                     currentVehiclesPositions.set(carId, nextPositionId);
 
-                    result += evaluatorUtils.addEdgeCost(currentPositionId, nextPositionId, graphStructure);
+                    int edgeCost = evaluatorUtils.addEdgeCost(currentPositionId, nextPositionId, graphStructure);
+                    result += edgeCost;
                     //aktualizujemy licznik dla danego samochodu
-                    timeCounter.set(carId, timeCounter.get(carId) + result);
+                    timeCounter.set(carId, timeCounter.get(carId) + edgeCost);
 
                     //sprawdzamy czy możemy obsłużyć tego klineta
-                    if (timeCounter.get(carId) >= readyTimes.get(nextPositionId)
-                            && timeCounter.get(carId) <= dueTimes.get(nextPositionId)) {
+   //                 if (timeCounter.get(carId) >= readyTimes.get(nextPositionId)
+   //                         && timeCounter.get(carId) <= dueTimes.get(nextPositionId)) {
                         if (customersCurrentDemand.get(nextPositionId) < currentVehiclesLoad.get(carId)) {
                             currentVehiclesLoad.set(carId, currentVehiclesLoad.get(carId) - customersCurrentDemand.get(nextPositionId));
                             customersCurrentDemand.set(nextPositionId, 0.0);
@@ -60,8 +61,8 @@ public class VRPTWEvaluator {
                             currentVehiclesLoad.set(carId, 0.0);
                         }
                         //obsłużylismy, czyli dokładamy cały czas obsługi
-                        timeCounter.set(carId, timeCounter.get(carId) + customersDemand.get(nextPositionId));
-                    }
+                        timeCounter.set(carId, timeCounter.get(carId) + 10.0);
+    //                }
 
                     if (dispatchListsPointers.get(currentPositionId).equals(dispatchListLength - 1)) {
                         isDispatchListLooped.set(currentPositionId, true);
