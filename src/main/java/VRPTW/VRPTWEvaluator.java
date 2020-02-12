@@ -15,12 +15,11 @@ public class VRPTWEvaluator {
     private int max_time_steps = 500;
     private EvaluatorUtils evaluatorUtils = new EvaluatorUtils();
 
-    public int evaluate(VRPTW vrptwProblem, IntegerSolution vrpsdSolution, Graph graph, ArrayList<Double> customersDemand) {
+    public int evaluate(VRPTW vrptwProblem, IntegerSolution vrpsdSolution, Graph graph, List<Double> customersDemand) {
         int numOfVehicles = vrptwProblem.getNumOfVehicles();
         double vehicleCapacity = vrptwProblem.getCapacity();
         int dispatchListLength = vrptwProblem.getDispatchListLength();
         int vertexNum = graph.getVertexNum();
-        double serviceTime = vrptwProblem.getServiceTime();
         List<Double> timeCounter = new ArrayList<Double>(Collections.nCopies(numOfVehicles, 0.0));
         List<Double> readyTimes = vrptwProblem.getReadyTimes();
         List<Double> dueTimes = vrptwProblem.getDueTimes();
@@ -61,7 +60,7 @@ public class VRPTWEvaluator {
                             currentVehiclesLoad.set(carId, 0.0);
                         }
                         //obsłużylismy, czyli dokładamy cały czas obsługi
-                        timeCounter.set(carId, timeCounter.get(carId) + serviceTime);
+                        timeCounter.set(carId, timeCounter.get(carId) + customersDemand.get(nextPositionId));
                     }
 
                     if (dispatchListsPointers.get(currentPositionId).equals(dispatchListLength - 1)) {

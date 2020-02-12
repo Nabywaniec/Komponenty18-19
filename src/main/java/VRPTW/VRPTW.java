@@ -11,7 +11,7 @@ import java.util.List;
 
 public class VRPTW extends AbstractIntegerProblem {
     private Graph graph;
-    private ArrayList<Double> customerDemands;
+    private List<Double> customerDemands;
     private int dispatchListLength;
     private int depotDispatchListLength;
     private int numOfVehicles;
@@ -19,7 +19,6 @@ public class VRPTW extends AbstractIntegerProblem {
     private FileWriter fw;
     private List<Double> readyTimes;
     private List<Double> dueTimes;
-    private double serviceTime;
 
     private long startTime;
 
@@ -39,14 +38,16 @@ public class VRPTW extends AbstractIntegerProblem {
         return capacity;
     }
 
-    public VRPTW(Graph graph, ArrayList<Double> customerDemands, int dispatchListLength, int depotDispatchListLength,
-                 int numOfVehicles, double capacity, FileWriter fw){
+    public VRPTW(Graph graph, List<Double> customerDemands, int dispatchListLength, int depotDispatchListLength,
+                 int numOfVehicles, double capacity, FileWriter fw, List<Double> readyTimes, List<Double> dueTimes){
         this.graph = graph;
         this.customerDemands = customerDemands;
         this.dispatchListLength = dispatchListLength;
         this.depotDispatchListLength = depotDispatchListLength;
         this.numOfVehicles = numOfVehicles;
         this.capacity = capacity;
+        this.readyTimes = readyTimes;
+        this.dueTimes = dueTimes;
 
         this.setNumberOfVariables(this.depotDispatchListLength + (this.graph.getVertexNum()-1)*this.dispatchListLength);
         this.setNumberOfObjectives(1);
@@ -67,19 +68,13 @@ public class VRPTW extends AbstractIntegerProblem {
         startTime = System.nanoTime();
     }
 
-    public void setTimeWindowsInfo(List<Double> readyTimes, List<Double> dueTimes, double serviceTime){
-        this.readyTimes = readyTimes;
-        this.dueTimes = dueTimes;
-        this.serviceTime = serviceTime;
-    }
-
     @Override
     public void evaluate(IntegerSolution integerSolution) {
         int fitness = 0;
 
         //VRPSDLuckyStarEvaluator evaluator = new VRPSDLuckyStarEvaluator();
         VRPTWEvaluator evaluator = new VRPTWEvaluator();
-        //fitness = evaluator.evaluate(this, integerSolution, graph, customerDemands);
+        fitness = evaluator.evaluate(this, integerSolution, graph, customerDemands);
 
         try {
             fw.write((System.nanoTime() - startTime) + " " + fitness + "\n");
@@ -98,7 +93,4 @@ public class VRPTW extends AbstractIntegerProblem {
         return dueTimes;
     }
 
-    public double getServiceTime() {
-        return serviceTime;
-    }
 }
