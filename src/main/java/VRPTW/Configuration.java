@@ -56,7 +56,8 @@ public class Configuration {
                 if(line.contains("NODE_COORD_SECTION")){
                     for(int vertexNum=0; vertexNum < this.verticesNum; vertexNum++){
                         line = br.readLine();
-                        List<String> splitted = Arrays.asList(line.split("      "));
+                        System.out.println(line);
+                        List<String> splitted = Arrays.asList(line.split(" "));
                         int vertexId = Integer.parseInt(splitted.get(0))-1;
                         int x = (int) Double.parseDouble(splitted.get(1));
                         int y = (int) Double.parseDouble(splitted.get(2));
