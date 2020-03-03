@@ -19,7 +19,6 @@ public class VRPTWLuckyStarEvaluator {
     private EvaluatorUtils evaluatorUtils = new EvaluatorUtils();
 
     public int evaluate(VRPTW vrptwProblem, IntegerSolution vrpsdSolution, Graph graph, List<Double> customersDemand) {
-        //System.out.println(vrpsdSolution.getVariables());
         int numOfVehicles = vrptwProblem.getNumOfVehicles();
         double vehicleCapacity = vrptwProblem.getCapacity();
         int dispatchListLength = vrptwProblem.getDispatchListLength();
@@ -41,14 +40,11 @@ public class VRPTWLuckyStarEvaluator {
         int step = -1;
         int result = 0;
         while (!evaluatorUtils.allCustomersSupplied(customersCurrentDemand) && step < max_steps) {
-            //System.out.println("step: " + step);
             step += 1;
             for (int carId = 0; carId < numOfVehicles; carId++) {
-                //System.out.println("car: " + carId);
                 if(evaluatorUtils.allCustomersSupplied(customersCurrentDemand))
                     break;
                 if (currentVehiclesLoad.get(carId) > 0.0 && timeCounter.get(carId).equals((double) step)) {
-                    //System.out.println("active car: " + carId);
                     int currentPositionId = currentVehiclesPositions.get(carId);
 
                     boolean isNextPositionProper = false;
@@ -57,13 +53,11 @@ public class VRPTWLuckyStarEvaluator {
                     int nextPositionId = 0;
                     while(!isNextPositionProper) {
                         nextPositionId = dispatchLists.get(currentPositionId).get(dispatchListsPointers.get(currentPositionId));
-                        //System.out.println(carId+" "+currentPositionId+" "+nextPositionId);
                         int currentDistance = evaluatorUtils.addEdgeCost(currentPositionId, nextPositionId, graphStructure);
                         //jeśli klient nie jest zaopatrzony i jest w dobrym czasie to #G
                         if(customersCurrentDemand.get(nextPositionId) != 0.0
                                 && (timeCounter.get(carId) + currentDistance >= readyTimes.get(nextPositionId)
                                 && timeCounter.get(carId) + currentDistance <= dueTimes.get(nextPositionId))){
-                            //System.out.println("best timeline");
                             isNextPositionProper = true;
                             hasDemand = true;
                             timeCounter.set(carId, timeCounter.get(carId) + currentDistance);
@@ -71,9 +65,7 @@ public class VRPTWLuckyStarEvaluator {
                             if(isDispatchListSlotUsed.get(currentPositionId).get(dispatchListsPointers.get(currentPositionId))){
                                 isNextPositionProper = true;
                                 timeCounter.set(carId, timeCounter.get(carId) + currentDistance);
-                                //System.out.println("worst timeline");
                             } else { //(klient ni mo zapotrzebowania lub ma zły czas) i slot nie był używany
-                                //System.out.println("still finding");
                                 int potentiallyLegitPosition = evaluatorUtils.findClosestDemandingCustomerWithinTime(currentPositionId,
                                         graphStructure, customersCurrentDemand, step, readyTimes, dueTimes);
                                 if(potentiallyLegitPosition != 0){
@@ -90,7 +82,6 @@ public class VRPTWLuckyStarEvaluator {
                             }
                         }
                     }
-                    //System.out.println("after lup");
 
                     if(!ableToDrive)
                         continue;
@@ -124,8 +115,8 @@ public class VRPTWLuckyStarEvaluator {
         }
         evaluatorUtils.saveSolution(vrpsdSolution, dispatchLists);
 
-        System.out.println((step < 500) ? result : max_eval);
-        return (step < 500) ? result : max_eval;
+        System.out.println((step < max_steps) ? result : max_eval);
+        return (step < max_steps) ? result : max_eval;
     }
 
     private ArrayList<ArrayList<Boolean>> setupIsDispatchListSlotUsedList(ArrayList<ArrayList<Integer>> dispatchLists,

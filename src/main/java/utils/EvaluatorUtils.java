@@ -153,7 +153,7 @@ public class EvaluatorUtils {
                     || step + addEdgeCost(currentPositionId, customerId, graphStructure) < readyTimes.get(customerId)){
                 customersFitness.add(Double.MAX_VALUE);
             } else {
-                customersFitness.add(readyTimes.get(customerId));
+                customersFitness.add(readyTimes.get(customerId) + addEdgeCost(currentPositionId, customerId, graphStructure));
             }
             customerId++;
         }
