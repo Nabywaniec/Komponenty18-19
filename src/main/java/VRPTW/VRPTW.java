@@ -19,6 +19,7 @@ public class VRPTW extends AbstractIntegerProblem {
     private FileWriter fw;
     private List<Double> readyTimes;
     private List<Double> dueTimes;
+    private List<Double> serviceTimes;
 
     private long startTime;
 
@@ -39,7 +40,8 @@ public class VRPTW extends AbstractIntegerProblem {
     }
 
     public VRPTW(Graph graph, List<Double> customerDemands, int dispatchListLength, int depotDispatchListLength,
-                 int numOfVehicles, double capacity, FileWriter fw, List<Double> readyTimes, List<Double> dueTimes){
+                 int numOfVehicles, double capacity, FileWriter fw, List<Double> readyTimes, List<Double> dueTimes,
+                 List<Double> serviceTimes){
         this.graph = graph;
         this.customerDemands = customerDemands;
         this.dispatchListLength = dispatchListLength;
@@ -48,6 +50,7 @@ public class VRPTW extends AbstractIntegerProblem {
         this.capacity = capacity;
         this.readyTimes = readyTimes;
         this.dueTimes = dueTimes;
+        this.serviceTimes = serviceTimes;
 
         this.setNumberOfVariables(this.depotDispatchListLength + (this.graph.getVertexNum()-1)*this.dispatchListLength);
         this.setNumberOfObjectives(1);

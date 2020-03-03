@@ -118,6 +118,8 @@ public class Configuration {
 
     public List<Double> getDueTimes(){return dueTimes;}
 
+    public List<Double> getServiceTimes() {return serviceTimes;}
+
     public int getBestValue() {
         return bestValue;
     }

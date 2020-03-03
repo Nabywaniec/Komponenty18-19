@@ -82,12 +82,13 @@ public class VRPTWRunner extends AbstractAlgorithmRunner {
         List<Double> customerDemands = conf.getCustomersDemand();
         List<Double> readyTimes = conf.getReadyTimes();
         List<Double> dueTimes = conf.getDueTimes();
+        List<Double> serviceTimes = conf.getServiceTimes();
 
 //        VRPSDSimpleEvaluator evaluatorSimple = new VRPSDSimpleEvaluator();
 //        System.out.println(evaluatorSimple.evaluateSimple(numOfDrivers, capacity, graph, customerDemands));
 
         problem = new VRPTW(graph, customerDemands, dispatchListLength, depotDispatchListLength, numOfDrivers, capacity, fw,
-                readyTimes, dueTimes);
+                readyTimes, dueTimes, serviceTimes);
 
 
         double crossoverProbability = 0.9 ;
