@@ -96,4 +96,8 @@ public class VRPTW extends AbstractIntegerProblem {
         return dueTimes;
     }
 
+    public List<Double> getServiceTimes() {
+        return serviceTimes;
+    }
+
 }

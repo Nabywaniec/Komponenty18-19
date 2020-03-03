@@ -23,6 +23,7 @@ public class VRPTWEvaluator {
         List<Double> timeCounter = new ArrayList<Double>(Collections.nCopies(numOfVehicles, 0.0));
         List<Double> readyTimes = vrptwProblem.getReadyTimes();
         List<Double> dueTimes = vrptwProblem.getDueTimes();
+        List<Double> serviceTimes = vrptwProblem.getServiceTimes();
 
         ArrayList<Integer> currentVehiclesPositions = new ArrayList<>(Collections.nCopies(numOfVehicles, 0));
         ArrayList<Double> currentVehiclesLoad = new ArrayList<>(Collections.nCopies(numOfVehicles, vehicleCapacity));
@@ -62,7 +63,7 @@ public class VRPTWEvaluator {
                     }
                     //obsłużylismy, czyli dokładamy cały czas obsługi
                     if (nextPositionId != 0) {
-                        timeCounter.set(carId, timeCounter.get(carId) + 10.0);
+                        timeCounter.set(carId, timeCounter.get(carId) + serviceTimes.get(nextPositionId));
                     }
                     //                }
 
