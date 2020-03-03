@@ -25,6 +25,7 @@ public class Configuration {
     private List<Double> readyTimes = new ArrayList<>();
     private List<Double> dueTimes = new ArrayList<>();
     private List<Double> customersDemand = new ArrayList<>();
+    private List<Double> serviceTimes = new ArrayList<>();
     private int bestValue;
     private int minNumOfTrucks;
 
@@ -64,9 +65,11 @@ public class Configuration {
                         double readyTime = Double.parseDouble(splitted.get(4));
                         double dueTime = Double.parseDouble(splitted.get(5));
                         double customerDemand = Double.parseDouble(splitted.get(3));
+                        double serviceTime = Double.parseDouble(splitted.get(6));
                         readyTimes.add(readyTime);
                         dueTimes.add(dueTime);
                         customersDemand.add(customerDemand);
+                        serviceTimes.add(serviceTime);
                         Vertex vertex = new Vertex(vertexId, x, y);
                         this.vertexesList.add(vertex);
                     }
