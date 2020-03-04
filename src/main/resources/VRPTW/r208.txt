@@ -1,5 +1,5 @@
 NAME : r208
-COMMENT : some comment
+COMMENT : (Min no of trucks: 2, Optimal value: 727)
 TYPE : TWVRP
 DIMENSION : 101
 EDGE_WEIGHT_TYPE : EUC_2D

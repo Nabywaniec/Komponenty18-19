@@ -1,5 +1,5 @@
 NAME : r106
-COMMENT : some comment
+COMMENT : (Min no of trucks: 12, Optimal value: 1252)
 TYPE : TWVRP
 DIMENSION : 101
 EDGE_WEIGHT_TYPE : EUC_2D

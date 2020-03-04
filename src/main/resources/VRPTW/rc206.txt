@@ -1,5 +1,5 @@
 NAME : rc206
-COMMENT : some comment
+COMMENT : (Min no of trucks: 3, Optimal value: 1146)
 TYPE : TWVRP
 DIMENSION : 101
 EDGE_WEIGHT_TYPE : EUC_2D
