@@ -78,10 +78,19 @@ public class Configuration {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //to tak na razie wpisane na sztywno
-        this.minNumOfTrucks =15;
-        this.bestValue = 600;
 
+        if(comment != null && comment.contains("Min no of trucks") &&
+                (comment.contains("Optimal value") || comment.contains("Best value"))){
+
+            Pattern p = Pattern.compile("\\d+");
+            Matcher m = p.matcher(comment);
+            ArrayList<Integer> values = new ArrayList<>();
+            while(m.find()) {
+                values.add(Integer.parseInt(m.group()));
+            }
+            this.minNumOfTrucks = values.get(0);
+            this.bestValue = values.get(1);
+        }
     }
 
     public String getName() {
