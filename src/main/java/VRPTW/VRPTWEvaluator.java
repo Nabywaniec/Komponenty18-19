@@ -12,10 +12,10 @@ import java.util.stream.Collectors;
 public class VRPTWEvaluator {
 
     private int max_eval = 100000;
-    private int max_time_steps = 500;
     private EvaluatorUtils evaluatorUtils = new EvaluatorUtils();
 
     public int evaluate(VRPTW vrptwProblem, IntegerSolution vrpsdSolution, Graph graph, List<Double> customersDemand) {
+        int max_time_steps = vrptwProblem.getMaxSteps();
         int numOfVehicles = vrptwProblem.getNumOfVehicles();
         double vehicleCapacity = vrptwProblem.getCapacity();
         int dispatchListLength = vrptwProblem.getDispatchListLength();
@@ -35,7 +35,7 @@ public class VRPTWEvaluator {
         ArrayList<Boolean> isDispatchListLooped = new ArrayList<>(Collections.nCopies(vertexNum, false));
         int step = -1;
         int result = 0;
-        while (!evaluatorUtils.allCustomersSupplied(customersCurrentDemand) && step < max_time_steps) {
+        while (!evaluatorUtils.allCustomersSupplied(customersCurrentDemand) && step <= max_time_steps) {
             step += 1;
             for (int carId = 0; carId < numOfVehicles; carId++) {
                 if (evaluatorUtils.allCustomersSupplied(customersCurrentDemand))
@@ -86,7 +86,7 @@ public class VRPTWEvaluator {
         }
 
         evaluatorUtils.saveSolution(vrpsdSolution, dispatchLists);
-        return (step < 500) ? result : max_eval;
+        return (step <= max_time_steps) ? result : max_eval;
 
     }
 

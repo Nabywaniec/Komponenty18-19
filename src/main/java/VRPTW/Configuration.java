@@ -28,6 +28,7 @@ public class Configuration {
     private List<Double> serviceTimes = new ArrayList<>();
     private int bestValue;
     private int minNumOfTrucks;
+    private int maxSteps;
 
     public Configuration(String configurationFilename) {
         this.configurationFilename = configurationFilename;
@@ -64,6 +65,8 @@ public class Configuration {
                         int y = (int) Double.parseDouble(splitted.get(2));
                         double readyTime = Double.parseDouble(splitted.get(4));
                         double dueTime = Double.parseDouble(splitted.get(5));
+                        if(vertexNum == 0)
+                            maxSteps = (int)dueTime;
                         double customerDemand = Double.parseDouble(splitted.get(3));
                         double serviceTime = Double.parseDouble(splitted.get(6));
                         readyTimes.add(readyTime);
@@ -136,4 +139,6 @@ public class Configuration {
     public int getMinNumOfTrucks() {
         return minNumOfTrucks;
     }
+
+    public int getMaxSteps() { return maxSteps; }
 }

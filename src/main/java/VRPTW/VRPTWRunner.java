@@ -51,7 +51,7 @@ public class VRPTWRunner extends AbstractAlgorithmRunner {
             gamma = Double.parseDouble(args[6]);
 
         } else {
-            filename = "r101.txt";
+            filename = "c101.txt";
             conf = new Configuration(fullDataFolderName + filename);
             dispatchListLength = 15;
             depotDispatchListLength = dispatchListLength;
@@ -88,7 +88,7 @@ public class VRPTWRunner extends AbstractAlgorithmRunner {
 //        System.out.println(evaluatorSimple.evaluateSimple(numOfDrivers, capacity, graph, customerDemands));
 
         problem = new VRPTW(graph, customerDemands, dispatchListLength, depotDispatchListLength, numOfDrivers, capacity, fw,
-                readyTimes, dueTimes, serviceTimes);
+                readyTimes, dueTimes, serviceTimes, conf.getMaxSteps());
 
 
         double crossoverProbability = 0.9 ;

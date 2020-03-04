@@ -15,10 +15,10 @@ import java.util.Map;
 public class VRPTWLuckyStarEvaluator {
 
     private int max_eval = 100000;
-    private int max_steps = 300;
     private EvaluatorUtils evaluatorUtils = new EvaluatorUtils();
 
     public int evaluate(VRPTW vrptwProblem, IntegerSolution vrpsdSolution, Graph graph, List<Double> customersDemand) {
+        int max_steps = vrptwProblem.getMaxSteps();
         int numOfVehicles = vrptwProblem.getNumOfVehicles();
         double vehicleCapacity = vrptwProblem.getCapacity();
         int dispatchListLength = vrptwProblem.getDispatchListLength();
@@ -40,7 +40,7 @@ public class VRPTWLuckyStarEvaluator {
 
         int step = -1;
         int result = 0;
-        while (!evaluatorUtils.allCustomersSupplied(customersCurrentDemand) && step < max_steps) {
+        while (!evaluatorUtils.allCustomersSupplied(customersCurrentDemand) && step <= max_steps) {
             step += 1;
             for (int carId = 0; carId < numOfVehicles; carId++) {
                 if(evaluatorUtils.allCustomersSupplied(customersCurrentDemand))
@@ -62,11 +62,12 @@ public class VRPTWLuckyStarEvaluator {
                             isNextPositionProper = true;
                             hasDemand = true;
                             timeCounter.set(carId, timeCounter.get(carId) + currentDistance);
-                        } else { //klient ni mo już zapotrzebowania lub jest o złym czasie a slot był już używany
+                        } else { //klient ni mo już zapotrzebowania i jest o złym czasie
+                            //a slot był już używany
                             if(isDispatchListSlotUsed.get(currentPositionId).get(dispatchListsPointers.get(currentPositionId))){
                                 isNextPositionProper = true;
                                 timeCounter.set(carId, timeCounter.get(carId) + currentDistance);
-                            } else { //(klient ni mo zapotrzebowania lub ma zły czas) i slot nie był używany
+                            } else { //a slot nie był używany
                                 int potentiallyLegitPosition = evaluatorUtils.findClosestDemandingCustomerWithinTime(currentPositionId,
                                         graphStructure, customersCurrentDemand, step, readyTimes, dueTimes);
                                 if(potentiallyLegitPosition != 0){
@@ -75,7 +76,7 @@ public class VRPTWLuckyStarEvaluator {
                                     isDispatchListSlotUsed.get(currentPositionId).remove((int)dispatchListsPointers.get(currentPositionId));
                                     isDispatchListSlotUsed.get(currentPositionId).add(false);
                                 } else {
-                                    //next pos is no pos
+                                    //nie istnieje klient, do którego można dostarczyć, pojazd czeka
                                     isNextPositionProper = true;
                                     ableToDrive = false;
                                     timeCounter.set(carId, timeCounter.get(carId) + 1);
@@ -86,7 +87,6 @@ public class VRPTWLuckyStarEvaluator {
 
                     if(!ableToDrive)
                         continue;
-
                     //jeśli dojdzie do dostarczania, to dodaj czas dostarczania
                     if(hasDemand)
                         timeCounter.set(carId, timeCounter.get(carId) + serviceTimes.get(nextPositionId));
@@ -116,8 +116,8 @@ public class VRPTWLuckyStarEvaluator {
         }
         evaluatorUtils.saveSolution(vrpsdSolution, dispatchLists);
 
-        System.out.println((step < max_steps) ? result : max_eval);
-        return (step < max_steps) ? result : max_eval;
+        System.out.println((step <= max_steps) ? result : max_eval);
+        return (step <= max_steps) ? result : max_eval;
     }
 
     private ArrayList<ArrayList<Boolean>> setupIsDispatchListSlotUsedList(ArrayList<ArrayList<Integer>> dispatchLists,

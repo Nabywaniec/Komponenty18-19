@@ -15,6 +15,7 @@ public class VRPTW extends AbstractIntegerProblem {
     private int dispatchListLength;
     private int depotDispatchListLength;
     private int numOfVehicles;
+    private int maxSteps;
     private double capacity;
     private FileWriter fw;
     private List<Double> readyTimes;
@@ -41,7 +42,7 @@ public class VRPTW extends AbstractIntegerProblem {
 
     public VRPTW(Graph graph, List<Double> customerDemands, int dispatchListLength, int depotDispatchListLength,
                  int numOfVehicles, double capacity, FileWriter fw, List<Double> readyTimes, List<Double> dueTimes,
-                 List<Double> serviceTimes){
+                 List<Double> serviceTimes, int maxSteps){
         this.graph = graph;
         this.customerDemands = customerDemands;
         this.dispatchListLength = dispatchListLength;
@@ -51,6 +52,7 @@ public class VRPTW extends AbstractIntegerProblem {
         this.readyTimes = readyTimes;
         this.dueTimes = dueTimes;
         this.serviceTimes = serviceTimes;
+        this.maxSteps = maxSteps;
 
         this.setNumberOfVariables(this.depotDispatchListLength + (this.graph.getVertexNum()-1)*this.dispatchListLength);
         this.setNumberOfObjectives(1);
@@ -75,7 +77,7 @@ public class VRPTW extends AbstractIntegerProblem {
     public void evaluate(IntegerSolution integerSolution) {
         int fitness = 0;
 
-        //VRPSDLuckyStarEvaluator evaluator = new VRPSDLuckyStarEvaluator();
+        //VRPTWLuckyStarEvaluator evaluator = new VRPTWLuckyStarEvaluator();
         VRPTWEvaluator evaluator = new VRPTWEvaluator();
         fitness = evaluator.evaluate(this, integerSolution, graph, customerDemands);
 
@@ -100,4 +102,5 @@ public class VRPTW extends AbstractIntegerProblem {
         return serviceTimes;
     }
 
+    public int getMaxSteps() { return maxSteps; }
 }
