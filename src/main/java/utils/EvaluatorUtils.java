@@ -99,6 +99,20 @@ public class EvaluatorUtils {
         return customersFitness.indexOf(Collections.min(customersFitness));
     }
 
+    private Random rand = new Random();
+
+    public int findRandomDemandingCustomer(int currentPositionId, Map<Vertex, List<Edge>> graphStructure, ArrayList<Double> customersCurrentDemand) {
+        int customerId = 0;
+        ArrayList<Integer> viableCustomers = new ArrayList<>();
+        for(Double customerDemand : customersCurrentDemand){
+            if(customerDemand != 0 && customerId != currentPositionId && customerId != 0){
+                viableCustomers.add(customerId);
+            }
+            customerId++;
+        }
+        return viableCustomers.get(rand.nextInt(viableCustomers.size()));
+    }
+
     public int findBestDemandPerDistanceCustomer(int currentPositionId, Map<Vertex, List<Edge>> graphStructure, ArrayList<Double> customersCurrentDemand) {
         int customerId = 0;
         ArrayList<Double> customersFitness = new ArrayList<>();
