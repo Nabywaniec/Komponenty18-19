@@ -116,7 +116,6 @@ public class VRPTWLuckyStarEvaluator {
         }
         evaluatorUtils.saveSolution(vrpsdSolution, dispatchLists);
 
-        System.out.println((step <= max_steps) ? result : max_eval);
         return (step <= max_steps) ? result : max_eval;
     }
 

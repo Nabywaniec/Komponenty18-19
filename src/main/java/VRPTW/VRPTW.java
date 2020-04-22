@@ -77,8 +77,8 @@ public class VRPTW extends AbstractIntegerProblem {
     public void evaluate(IntegerSolution integerSolution) {
         int fitness = 0;
 
-        //VRPTWLuckyStarEvaluator evaluator = new VRPTWLuckyStarEvaluator();
-        VRPTWEvaluator evaluator = new VRPTWEvaluator();
+        VRPTWLuckyStarEvaluator evaluator = new VRPTWLuckyStarEvaluator();
+        //VRPTWEvaluator evaluator = new VRPTWEvaluator();
         fitness = evaluator.evaluate(this, integerSolution, graph, customerDemands);
 
         try {

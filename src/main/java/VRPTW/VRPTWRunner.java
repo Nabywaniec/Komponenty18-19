@@ -51,11 +51,11 @@ public class VRPTWRunner extends AbstractAlgorithmRunner {
             gamma = Double.parseDouble(args[6]);
 
         } else {
-            filename = "c101.txt";
+            filename = "r201.txt";
             conf = new Configuration(fullDataFolderName + filename);
-            dispatchListLength = 15;
-            depotDispatchListLength = dispatchListLength;
-            numOfDrivers = conf.getMinNumOfTrucks();
+            dispatchListLength = 2;
+            depotDispatchListLength = 5;
+            numOfDrivers = depotDispatchListLength;
             capacity = conf.getCapacity();
             alpha = 0.1;
             gamma = 0.3;
